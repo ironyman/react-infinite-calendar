@@ -196,7 +196,6 @@ const Quarters = (props) => {
                     style={style}
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log('ON CLICK', isDisabled);
                       if (!isDisabled) {
                         handleClick(months[0], e);
                       }

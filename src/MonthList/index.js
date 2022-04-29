@@ -33,7 +33,6 @@ export default class MonthList extends Component {
     today: PropTypes.instanceOf(Date),
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   };
-
   state = {
     scrollOffset: this.getDateOffset(this.props.scrollDate),
   };
