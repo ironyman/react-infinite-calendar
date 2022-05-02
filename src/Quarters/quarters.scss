@@ -57,12 +57,6 @@ $cellSize: 40px;
   label:not(.label) {
     flex-basis: 42%;
 
-    &.currentYear {
-      & > span {
-        color: $pink;
-      }
-    }
-
     :hover > span {
       color: $pink;
     }

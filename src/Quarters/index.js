@@ -27,11 +27,14 @@ const parseWithinRange = ({ months, selected }) => {
 const isSameQuarter = (months, today) =>
   months.some((month) => isSameMonth(month, today));
 
-const isDateDisabled = ({ date, min, minDate, max, maxDate }) =>
-  isBefore(date, startOfMonth(min)) ||
-  isBefore(date, startOfMonth(minDate)) ||
-  isAfter(date, max) ||
-  isAfter(date, maxDate);
+const isDateDisabled = ({ date, min, minDate, max, maxDate }) => {
+  return (
+    isBefore(date, startOfMonth(min)) ||
+    isBefore(date, startOfMonth(minDate)) ||
+    isAfter(date, max) ||
+    isAfter(date, maxDate)
+  );
+};
 
 const allowToSwitchYear = ({ selected, year, min, minDate, max, maxDate }) => {
   if (isRange(selected)) {
@@ -301,7 +304,6 @@ const Quarters = (props) => {
             ...appendages,
           ];
           const chunked = chunk(fiscalYear, 4);
-
           return (
             <div
               key={index}

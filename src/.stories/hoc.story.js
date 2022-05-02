@@ -24,6 +24,7 @@ import {
   isBefore,
   subMonths,
   startOfMonth,
+  subQuarters,
 } from 'date-fns';
 
 const today = new Date();
@@ -135,10 +136,10 @@ storiesOf('Higher Order Components', module)
   .add('Quarter Range Selection', () => (
     <InfiniteCalendar
       isQuarterlySelection
-      fiscalYearStart={5}
+      fiscalYearStart={4}
       selected={{
-        start: subMonths(new Date(), 1),
-        end: addMonths(new Date(), 4),
+        start: subQuarters(new Date(), 4),
+        end: subQuarters(new Date(), 1),
       }}
       display={'quarters'}
       displayOptions={{
@@ -146,10 +147,10 @@ storiesOf('Higher Order Components', module)
         hideYearsOnSelect: false,
       }}
       onSelect={(e) => console.log('ON SELECT', e)}
-      min={subMonths(startOfMonth(new Date()), 18)}
-      minDate={subMonths(startOfMonth(new Date()), 9)}
-      max={addMonths(endOfMonth(new Date()), 18)}
-      maxDate={addMonths(endOfMonth(new Date()), 9)}
+      min={new Date('2001-01-01')}
+      minDate={new Date('2001-01-01')}
+      max={new Date()}
+      maxDate={new Date()}
       Component={withQuarterRange(Calendar)}
     />
   ))
