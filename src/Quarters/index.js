@@ -242,7 +242,7 @@ const Quarters = (props) => {
 
   const currentYear = today.getFullYear();
   const yearsSliced = years.slice(0, years.length);
-  const rowHeight = 210;
+  const rowHeight = 164;
   const heights = yearsSliced.map((val, index) =>
     index === 0 || index === yearsSliced.length - 1
       ? rowHeight + SPACING

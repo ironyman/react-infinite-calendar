@@ -83,7 +83,7 @@ $cellSize: 40px;
     height: 100%;
 
     > label {
-      padding: 18px;
+      padding: 12px;
       &.selected {
         & > span {
           color: $pink;
@@ -93,22 +93,18 @@ $cellSize: 40px;
 
     div {
       &:not(:last-child) {
-        border-bottom: 1px solid $blue_25;
+        border-bottom: 1px solid $blue_15;
       }
 
       ol {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        margin: 5px 0px;
+        margin: 0px;
         padding: 0;
         min-width: 5 * $cellSize;
         font-size: 12px;
         border-radius: 20px;
-
-        &.currentQuarter {
-          border: 1px solid $blue_25;
-        }
 
         & > label {
           width: 10px;
