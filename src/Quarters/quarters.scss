@@ -92,12 +92,11 @@ $cellSize: 40px;
       ol {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-between;
         margin: 0px;
         padding: 0;
         min-width: 5 * $cellSize;
         font-size: 12px;
-        border-radius: 20px;
 
         & > label {
           width: 10px;
@@ -117,18 +116,19 @@ $cellSize: 40px;
 
         &:hover {
           background-color: $blue_10;
+          border-radius: 20px;
         }
 
         &.selected {
-          background: $blue;
-          color: #fff;
-          & > li {
-            color: #fff;
-          }
+          background-color: $blue_25;
+          border-radius: 20px;
+          // color: #fff;
+          // & > li {
+          //   color: #fff;
+          // }
         }
 
         li {
-          margin: 0 10px;
           display: flex;
           width: $cellSize;
           height: $cellSize;
@@ -171,25 +171,25 @@ $cellSize: 40px;
  * Range selection styles
  */
 .range.selected {
-  &.start,
-  &.end {
-    &:after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 50%;
-      height: $cellSize;
-      margin-top: -0.5 * $cellSize;
-      background-color: $blue_25;
-    }
+  // &.start,
+  // &.end {
+  //   &:after {
+  //     content: '';
+  //     position: absolute;
+  //     top: 50%;
+  //     width: 50%;
+  //     height: $cellSize;
+  //     margin-top: -0.5 * $cellSize;
+  //     background-color: $blue_25;
+  //   }
 
-    .selection {
-      font-weight: bold;
-      color: #fff;
-      background-color: $blue;
-      box-sizing: border-box;
-    }
-  }
+  //   .selection {
+  //     font-weight: bold;
+  //     color: #fff;
+  //     background-color: $blue;
+  //     box-sizing: border-box;
+  //   }
+  // }
 
   &.disabled {
     background-color: $blue_25 !important;
@@ -202,30 +202,31 @@ $cellSize: 40px;
     }
   }
 
-  &.start {
-    .selection {
-      border-radius: 20px;
-    }
+  // &.start {
+  //   .selection {
+  //     border-radius: 20px;
+  //   }
 
-    &:after {
-      right: 0;
-    }
+  //   &:after {
+  //     right: 0;
+  //   }
 
-    &.end:after {
-      display: none;
-    }
-  }
+  //   &.end:after {
+  //     display: none;
+  //   }
+  // }
 
-  &.end {
-    &:after {
-      left: 0;
-    }
+  // &.end {
+  //   &:after {
+  //     left: 0;
+  //   }
 
-    .selection {
-      border-top-right-radius: 50%;
-      border-bottom-right-radius: 50%;
-    }
-  }
+  //   .selection {
+  //     border-top-right-radius: 50%;
+  //     border-bottom-right-radius: 50%;
+  //   }
+  // }
+
   &:nth-child(6n).start:after {
     display: none;
   }

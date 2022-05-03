@@ -163,21 +163,6 @@ const Quarters = (props) => {
 
               const isStart = getStart();
               const isEnd = getEnd();
-
-              const style = Object.assign(
-                {},
-                isSelected && {
-                  backgroundColor:
-                    typeof theme.selectionColor === 'function'
-                      ? theme.selectionColor(months[0])
-                      : theme.selectionColor,
-                  color: '#FFF',
-                },
-                isCurrentQuarter && {
-                  borderColor: theme.todayColor,
-                }
-              );
-
               return (
                 <div key={`${getMonth(months[0])}`}>
                   <ol
@@ -186,8 +171,6 @@ const Quarters = (props) => {
                       [styles.currentQuarter]: isCurrentQuarter,
                       [styles.disabled]: isDisabled,
                       [styles.range]: isRange(selected) && !isStart && !isEnd,
-                      [styles.start]: isStart,
-                      [styles.end]: isEnd,
                       [styles.betweenRange]:
                         parseWithinRange({
                           months,
@@ -196,7 +179,6 @@ const Quarters = (props) => {
                         !isStart &&
                         !isEnd,
                     })}
-                    style={style}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (!isDisabled) {
@@ -210,6 +192,16 @@ const Quarters = (props) => {
                         <li
                           key={index}
                           data-month={`${format(date, 'YYYY-MM')}`}
+                          className={classNames({
+                            [styles.edge]: isSameMonth(
+                              date,
+                              getSelected(selected).start
+                            ),
+                            [styles.end]: isSameMonth(
+                              date,
+                              getSelected(selected).end
+                            ),
+                          })}
                         >
                           <div
                             className={styles.selection}
@@ -229,18 +221,7 @@ const Quarters = (props) => {
         </>
       );
     },
-    [
-      handleClick,
-      handlers,
-      locale,
-      max,
-      maxDate,
-      min,
-      minDate,
-      selected,
-      theme,
-      today,
-    ]
+    [handleClick, handlers, locale, max, maxDate, min, minDate, selected, today]
   );
 
   const currentYear = today.getFullYear();

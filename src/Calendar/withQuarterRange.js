@@ -1,4 +1,11 @@
-import { min, max, startOfMonth, endOfMonth, addMonths } from 'date-fns';
+import {
+  min,
+  max,
+  getMonth,
+  startOfMonth,
+  endOfMonth,
+  addMonths,
+} from 'date-fns';
 import { compose, withProps, withState } from 'recompose';
 import { withDefaultProps } from './';
 import { withImmutableProps } from '../utils';
@@ -56,7 +63,16 @@ export const withQuarterRange = compose(
 
 function handleSelect(
   date,
-  { onSelect, selectionStart, setSelectionStart, min, max, minDate, maxDate }
+  {
+    onSelect,
+    selectionStart,
+    setSelectionStart,
+    min,
+    max,
+    minDate,
+    maxDate,
+    fiscalYearStart,
+  }
 ) {
   if (selectionStart) {
     onSelect({
@@ -66,8 +82,7 @@ function handleSelect(
         end: date,
         minSelected: minDate,
         maxSelected: maxDate,
-        minScrolled: min,
-        maxScrolled: max,
+        fiscalYearStart,
       }),
     });
     setSelectionStart(null);
@@ -79,15 +94,14 @@ function handleSelect(
         end: date,
         minSelected: minDate,
         maxSelected: maxDate,
-        minScrolled: min,
-        maxScrolled: max,
+        fiscalYearStart,
       }),
     });
     setSelectionStart(date);
   }
 }
 
-function handleMouseOver(e, { onSelect, selectionStart }) {
+function handleMouseOver(e, { onSelect, selectionStart, fiscalYearStart }) {
   e.stopPropagation();
   const month = e.target.getAttribute('data-month');
   if (!month) {
@@ -98,8 +112,23 @@ function handleMouseOver(e, { onSelect, selectionStart }) {
     ...getMonthRangeDate({
       start: selectionStart,
       end: month,
+      fiscalYearStart,
     }),
   });
+}
+
+function startOfQuarter(date, fiscalYearStart) {
+  const month = getMonth(date);
+  const offset = (month + 12 - fiscalYearStart) % 4;
+  const startQuarterMonth = startOfMonth(addMonths(date, -offset));
+  return startQuarterMonth;
+}
+
+function endOfQuarter(date, fiscalYearStart) {
+  const month = getMonth(date);
+  const offset = 2 - ((month + 12 - fiscalYearStart) % 4);
+  const endQuarterMonth = endOfMonth(addMonths(date, offset));
+  return endQuarterMonth;
 }
 
 function getMonthRangeDate({
@@ -107,20 +136,17 @@ function getMonthRangeDate({
   end,
   minSelected,
   maxSelected,
-  minScrolled,
-  maxScrolled,
+  fiscalYearStart,
 }) {
   const sortedDate = getSortedSelection({ start, end });
   const compareStartDate = [];
   const compareEndDate = [];
   if (sortedDate.start) {
-    compareStartDate.push(sortedDate.start, startOfMonth(sortedDate.start));
-    minScrolled && compareStartDate.push(minScrolled);
+    compareStartDate.push(startOfQuarter(sortedDate.start, fiscalYearStart));
     minSelected && compareStartDate.push(minSelected);
   }
   if (sortedDate.end) {
-    compareEndDate.push(endOfMonth(sortedDate.end));
-    maxScrolled && compareEndDate.push(maxScrolled);
+    compareEndDate.push(endOfQuarter(sortedDate.end, fiscalYearStart));
     maxSelected && compareEndDate.push(maxSelected);
   }
   return {
