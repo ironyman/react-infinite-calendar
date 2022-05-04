@@ -116,23 +116,6 @@ storiesOf('Higher Order Components', module)
       Component={withMonthRange(Calendar)}
     />
   ))
-  .add('Quarterly Selection', () => (
-    <InfiniteCalendar
-      isQuarterlySelection
-      selected={subMonths(new Date(), 3)}
-      fiscalYearStart={5}
-      display={'quarters'}
-      displayOptions={{
-        showHeader: false,
-        hideYearsOnSelect: false,
-      }}
-      onSelect={(e) => console.log('ON SELECT', e)}
-      min={subMonths(startOfMonth(new Date()), 20)}
-      minDate={subMonths(startOfMonth(new Date()), 11)}
-      max={addMonths(endOfMonth(new Date()), 22)}
-      maxDate={addMonths(endOfMonth(new Date()), 11)}
-    />
-  ))
   .add('Quarter Range Selection', () => (
     <InfiniteCalendar
       isQuarterlySelection

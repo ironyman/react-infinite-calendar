@@ -143,6 +143,7 @@ const Quarters = (props) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       if (!isDisabled) {
+                        console.log({ months });
                         handleClick(months[0], e);
                       }
                     }}
