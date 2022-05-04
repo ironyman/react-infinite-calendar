@@ -141,6 +141,11 @@ $cellSize: 40px;
           font-weight: normal;
           text-transform: capitalize;
         }
+
+        // expand the hovering area
+        li:nth-child(2) {
+          flex: 1;
+        }
       }
 
       &:hover,
@@ -162,49 +167,5 @@ $cellSize: 40px;
         border-bottom: none;
       }
     }
-  }
-}
-
-/*
- * Range selection styles
- */
-.range.selected {
-  &.disabled {
-    background-color: $blue_25 !important;
-    .selection.selection {
-      background-color: $blue_25 !important;
-      color: #fff;
-    }
-    &:after {
-      background-color: $blue_25 !important;
-    }
-  }
-
-  &:nth-child(6n).start:after {
-    display: none;
-  }
-  &:nth-child(6n + 1).end:after {
-    display: none;
-  }
-
-  &.betweenRange {
-    border-radius: 0;
-    background-color: $blue_25 !important;
-    .selection {
-      left: 0;
-      right: 0;
-      width: 100%;
-      margin-left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: $blue;
-    }
-  }
-  &:nth-child(6n + 1).betweenRange {
-    border-radius: 20px;
-  }
-  &:nth-child(6n).betweenRange {
-    border-radius: 20px;
   }
 }

@@ -149,8 +149,8 @@ storiesOf('Higher Order Components', module)
       onSelect={(e) => console.log('ON SELECT', e)}
       min={new Date('2011-06-01')}
       minDate={new Date('2011-06-01')}
-      max={new Date()}
-      maxDate={new Date()}
+      max={new Date('2022-03-31')}
+      maxDate={new Date('2022-03-31')}
       Component={withQuarterRange(Calendar)}
     />
   ))
