@@ -138,8 +138,8 @@ storiesOf('Higher Order Components', module)
       isQuarterlySelection
       fiscalYearStart={4}
       selected={{
-        start: subQuarters(new Date(), 4),
-        end: subQuarters(new Date(), 1),
+        start: '2022-01-01',
+        end: '2022-03-31',
       }}
       display={'quarters'}
       displayOptions={{
@@ -148,7 +148,7 @@ storiesOf('Higher Order Components', module)
       }}
       onSelect={(e) => console.log('ON SELECT', e)}
       min={new Date('2011-06-01')}
-      minDate={new Date('2001-06-01')}
+      minDate={new Date('2011-06-01')}
       max={new Date()}
       maxDate={new Date()}
       Component={withQuarterRange(Calendar)}

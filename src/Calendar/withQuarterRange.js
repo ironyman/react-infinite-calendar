@@ -101,7 +101,10 @@ function handleSelect(
   }
 }
 
-function handleMouseOver(e, { onSelect, selectionStart, fiscalYearStart }) {
+function handleMouseOver(
+  e,
+  { onSelect, selectionStart, fiscalYearStart, ...left }
+) {
   e.stopPropagation();
   const month = e.target.getAttribute('data-month');
   if (!month) {
@@ -110,23 +113,23 @@ function handleMouseOver(e, { onSelect, selectionStart, fiscalYearStart }) {
   onSelect({
     eventType: EVENT_TYPE.HOVER,
     ...getMonthRangeDate({
-      start: selectionStart,
-      end: month,
+      start: min(selectionStart, month),
+      end: max(selectionStart, month),
       fiscalYearStart,
     }),
   });
 }
 
 function startOfQuarter(date, fiscalYearStart) {
-  const month = getMonth(date);
-  const offset = (month + 12 - fiscalYearStart) % 4;
+  const month = getMonth(date) + 1;
+  const offset = (month + 12 - fiscalYearStart) % 3;
   const startQuarterMonth = startOfMonth(addMonths(date, -offset));
   return startQuarterMonth;
 }
 
 function endOfQuarter(date, fiscalYearStart) {
-  const month = getMonth(date);
-  const offset = 2 - ((month + 12 - fiscalYearStart) % 4);
+  const month = getMonth(date) + 1;
+  const offset = 2 - ((month + 12 - fiscalYearStart) % 3);
   const endQuarterMonth = endOfMonth(addMonths(date, offset));
   return endQuarterMonth;
 }

@@ -86,6 +86,8 @@ const Quarters = (props) => {
     fiscalYearStart = 1,
   } = props;
 
+  console.log({ debug: getSelected(selected) }); // DE3UG
+
   const selectedYearIndex = useMemo(() => {
     const yearsSliced = years.slice(0, years.length);
     return yearsSliced.indexOf(getSelected(selected).start.getFullYear());
@@ -193,10 +195,9 @@ const Quarters = (props) => {
                           key={index}
                           data-month={`${format(date, 'YYYY-MM')}`}
                           className={classNames({
-                            [styles.edge]: isSameMonth(
-                              date,
-                              getSelected(selected).start
-                            ),
+                            [styles.selected]:
+                              isSameMonth(date, getSelected(selected).start) ||
+                              isSameMonth(date, getSelected(selected).end),
                             [styles.end]: isSameMonth(
                               date,
                               getSelected(selected).end

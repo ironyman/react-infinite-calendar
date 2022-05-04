@@ -108,13 +108,15 @@ $cellSize: 40px;
           & > li {
             color: $blue_25;
           }
-
-          &:hover {
-            background-color: inherit;
-          }
         }
 
-        &:hover {
+        li.selected {
+          background: $blue;
+          border-radius: 100%;
+          color: #fff;
+        }
+
+        &:hover:not(.disabled):not(.selected) {
           background-color: $blue_10;
           border-radius: 20px;
         }
@@ -122,10 +124,6 @@ $cellSize: 40px;
         &.selected {
           background-color: $blue_25;
           border-radius: 20px;
-          // color: #fff;
-          // & > li {
-          //   color: #fff;
-          // }
         }
 
         li {
@@ -171,26 +169,6 @@ $cellSize: 40px;
  * Range selection styles
  */
 .range.selected {
-  // &.start,
-  // &.end {
-  //   &:after {
-  //     content: '';
-  //     position: absolute;
-  //     top: 50%;
-  //     width: 50%;
-  //     height: $cellSize;
-  //     margin-top: -0.5 * $cellSize;
-  //     background-color: $blue_25;
-  //   }
-
-  //   .selection {
-  //     font-weight: bold;
-  //     color: #fff;
-  //     background-color: $blue;
-  //     box-sizing: border-box;
-  //   }
-  // }
-
   &.disabled {
     background-color: $blue_25 !important;
     .selection.selection {
@@ -201,31 +179,6 @@ $cellSize: 40px;
       background-color: $blue_25 !important;
     }
   }
-
-  // &.start {
-  //   .selection {
-  //     border-radius: 20px;
-  //   }
-
-  //   &:after {
-  //     right: 0;
-  //   }
-
-  //   &.end:after {
-  //     display: none;
-  //   }
-  // }
-
-  // &.end {
-  //   &:after {
-  //     left: 0;
-  //   }
-
-  //   .selection {
-  //     border-top-right-radius: 50%;
-  //     border-bottom-right-radius: 50%;
-  //   }
-  // }
 
   &:nth-child(6n).start:after {
     display: none;
