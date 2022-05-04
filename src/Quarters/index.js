@@ -86,8 +86,6 @@ const Quarters = (props) => {
     fiscalYearStart = 1,
   } = props;
 
-  console.log({ debug: getSelected(selected) }); // DE3UG
-
   const selectedYearIndex = useMemo(() => {
     const yearsSliced = years.slice(0, years.length);
     return yearsSliced.indexOf(getSelected(selected).start.getFullYear());

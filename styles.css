@@ -595,9 +595,11 @@
         cursor: not-allowed; }
         .quarters_year__18P9F article div ol.quarters_disabled__VEEFU > li {
           color: #c3c8d1; }
-        .quarters_year__18P9F article div ol.quarters_disabled__VEEFU:hover {
-          background-color: inherit; }
-      .quarters_year__18P9F article div ol:hover {
+      .quarters_year__18P9F article div ol li.quarters_selected__2DTub {
+        background: #0f2346;
+        border-radius: 100%;
+        color: #fff; }
+      .quarters_year__18P9F article div ol:hover:not(.quarters_disabled__VEEFU):not(.quarters_selected__2DTub) {
         background-color: #e7e8ec;
         border-radius: 20px; }
       .quarters_year__18P9F article div ol.quarters_selected__2DTub {
