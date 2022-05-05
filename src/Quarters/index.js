@@ -78,7 +78,6 @@ const Quarters = (props) => {
   } = props;
 
   const { start, end } = getSelected(selected);
-  console.log({ start, end }); // DE3UG
   const selectedYearIndex = useMemo(() => {
     const yearsSliced = years.slice(0, years.length);
     return yearsSliced.indexOf(start.getFullYear());
@@ -143,7 +142,6 @@ const Quarters = (props) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       if (!isDisabled) {
-                        console.log({ months });
                         handleClick(months[0], e);
                       }
                     }}
