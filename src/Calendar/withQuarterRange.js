@@ -101,10 +101,7 @@ function handleSelect(
   }
 }
 
-function handleMouseOver(
-  e,
-  { onSelect, selectionStart, fiscalYearStart, ...left }
-) {
+function handleMouseOver(e, { onSelect, selectionStart, fiscalYearStart }) {
   e.stopPropagation();
   const month = e.target.getAttribute('data-month');
   if (!month) {
