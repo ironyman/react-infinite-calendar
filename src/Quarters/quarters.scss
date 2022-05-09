@@ -77,11 +77,6 @@ $cellSize: 40px;
 
     > label {
       padding: 12px;
-      &.selected {
-        & > span {
-          color: $pink;
-        }
-      }
     }
 
     div {
