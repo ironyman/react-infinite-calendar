@@ -49,7 +49,6 @@ $cellSize: 40px;
 
     & > label {
       box-sizing: border-box;
-      padding: 5px 0px;
       height: 100%;
       line-height: $cellSize;
     }
@@ -57,12 +56,6 @@ $cellSize: 40px;
 
   label:not(.label) {
     flex-basis: 42%;
-
-    &.currentYear {
-      & > span {
-        color: $pink;
-      }
-    }
 
     :hover > span {
       color: $pink;
@@ -83,32 +76,22 @@ $cellSize: 40px;
     height: 100%;
 
     > label {
-      padding: 18px;
-      &.selected {
-        & > span {
-          color: $pink;
-        }
-      }
+      padding: 12px;
     }
 
     div {
       &:not(:last-child) {
-        border-bottom: 1px solid $blue_25;
+        border-bottom: 1px solid $blue_15;
       }
 
       ol {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
-        margin: 5px 0px;
+        justify-content: space-between;
+        margin: 0px;
         padding: 0;
         min-width: 5 * $cellSize;
         font-size: 12px;
-        border-radius: 20px;
-
-        &.currentQuarter {
-          border: 1px solid $blue_25;
-        }
 
         & > label {
           width: 10px;
@@ -120,26 +103,25 @@ $cellSize: 40px;
           & > li {
             color: $blue_25;
           }
-
-          &:hover {
-            background-color: inherit;
-          }
         }
 
-        &:hover {
+        li.selected {
+          background: $blue;
+          border-radius: 100%;
+          color: #fff;
+        }
+
+        &:hover:not(.disabled):not(.selected) {
           background-color: $blue_10;
+          border-radius: 20px;
         }
 
         &.selected {
-          background: $blue;
-          color: #fff;
-          & > li {
-            color: #fff;
-          }
+          background-color: $blue_25;
+          border-radius: 20px;
         }
 
         li {
-          margin: 0 10px;
           display: flex;
           width: $cellSize;
           height: $cellSize;
@@ -153,6 +135,11 @@ $cellSize: 40px;
           color: $blue;
           font-weight: normal;
           text-transform: capitalize;
+        }
+
+        // expand the hovering area
+        li:nth-child(2) {
+          flex: 1;
         }
       }
 
@@ -175,93 +162,5 @@ $cellSize: 40px;
         border-bottom: none;
       }
     }
-  }
-}
-
-/*
- * Range selection styles
- */
-.range.selected {
-  &.start,
-  &.end {
-    &:after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 50%;
-      height: $cellSize;
-      margin-top: -0.5 * $cellSize;
-      background-color: $blue_25;
-    }
-
-    .selection {
-      font-weight: bold;
-      color: #fff;
-      background-color: $blue;
-      box-sizing: border-box;
-    }
-  }
-
-  &.disabled {
-    background-color: $blue_25 !important;
-    .selection.selection {
-      background-color: $blue_25 !important;
-      color: #fff;
-    }
-    &:after {
-      background-color: $blue_25 !important;
-    }
-  }
-
-  &.start {
-    .selection {
-      border-radius: 20px;
-    }
-
-    &:after {
-      right: 0;
-    }
-
-    &.end:after {
-      display: none;
-    }
-  }
-
-  &.end {
-    &:after {
-      left: 0;
-    }
-
-    .selection {
-      border-top-right-radius: 50%;
-      border-bottom-right-radius: 50%;
-    }
-  }
-  &:nth-child(6n).start:after {
-    display: none;
-  }
-  &:nth-child(6n + 1).end:after {
-    display: none;
-  }
-
-  &.betweenRange {
-    border-radius: 0;
-    background-color: $blue_25 !important;
-    .selection {
-      left: 0;
-      right: 0;
-      width: 100%;
-      margin-left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: $blue;
-    }
-  }
-  &:nth-child(6n + 1).betweenRange {
-    border-radius: 20px;
-  }
-  &:nth-child(6n).betweenRange {
-    border-radius: 20px;
   }
 }

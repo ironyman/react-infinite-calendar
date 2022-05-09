@@ -8,3 +8,4 @@
 .idea/
 styles.css
 npm-debug.log*
+.DS_Store

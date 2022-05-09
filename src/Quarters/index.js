@@ -14,24 +14,18 @@ import {
   getMonth,
   addYears,
 } from 'date-fns';
-import styles from './Quarters.scss';
+import styles from './quarters.scss';
 
 const SPACING = 0;
 
-const parseWithinRange = ({ months, selected }) => {
-  return months.some((month) =>
-    isWithinRange(month, getSelected(selected).start, getSelected(selected).end)
+const isDateDisabled = ({ date, min, minDate, max, maxDate }) => {
+  return (
+    isBefore(date, startOfMonth(min)) ||
+    isBefore(date, startOfMonth(minDate)) ||
+    isAfter(date, startOfMonth(max)) ||
+    isAfter(date, startOfMonth(maxDate))
   );
 };
-
-const isSameQuarter = (months, today) =>
-  months.some((month) => isSameMonth(month, today));
-
-const isDateDisabled = ({ date, min, minDate, max, maxDate }) =>
-  isBefore(date, startOfMonth(min)) ||
-  isBefore(date, startOfMonth(minDate)) ||
-  isAfter(date, max) ||
-  isAfter(date, maxDate);
 
 const allowToSwitchYear = ({ selected, year, min, minDate, max, maxDate }) => {
   if (isRange(selected)) {
@@ -83,10 +77,11 @@ const Quarters = (props) => {
     fiscalYearStart = 1,
   } = props;
 
+  const { start, end } = getSelected(selected);
   const selectedYearIndex = useMemo(() => {
     const yearsSliced = years.slice(0, years.length);
-    return yearsSliced.indexOf(getSelected(selected).start.getFullYear());
-  }, [selected, years]);
+    return yearsSliced.indexOf(start.getFullYear());
+  }, [years, start]);
 
   const handleClick = useCallback(
     (date, e) => {
@@ -105,11 +100,7 @@ const Quarters = (props) => {
           <article className="quarter-label">
             {chunked.map((months, index) => {
               const isSelected = months.some((month) =>
-                isWithinRange(
-                  month,
-                  getSelected(selected).start,
-                  getSelected(selected).end
-                )
+                isWithinRange(month, start, end)
               );
 
               return (
@@ -137,66 +128,19 @@ const Quarters = (props) => {
 
                 return disabled;
               });
-
-              const isCurrentQuarter = isSameQuarter(months, today);
-
               const isSelected = months.some((month) =>
-                isWithinRange(
-                  month,
-                  getSelected(selected).start,
-                  getSelected(selected).end
-                )
-              );
-
-              const getStart = () =>
-                months.some((month) =>
-                  isSameMonth(month, getSelected(selected).start)
-                );
-
-              const getEnd = () =>
-                months.some((month) =>
-                  isSameMonth(month, getSelected(selected).end)
-                );
-
-              const isStart = getStart();
-              const isEnd = getEnd();
-
-              const style = Object.assign(
-                {},
-                isSelected && {
-                  backgroundColor:
-                    typeof theme.selectionColor === 'function'
-                      ? theme.selectionColor(months[0])
-                      : theme.selectionColor,
-                  color: '#FFF',
-                },
-                isCurrentQuarter && {
-                  borderColor: theme.todayColor,
-                }
+                isWithinRange(month, start, end)
               );
 
               return (
                 <div key={`${getMonth(months[0])}`}>
                   <ol
                     className={classNames(styles.month, {
-                      [styles.selected]: isSelected,
-                      [styles.currentQuarter]: isCurrentQuarter,
+                      [styles.selected]: isSelected && !isDisabled,
                       [styles.disabled]: isDisabled,
-                      [styles.range]: isRange(selected) && !isStart && !isEnd,
-                      [styles.start]: isStart,
-                      [styles.end]: isEnd,
-                      [styles.betweenRange]:
-                        parseWithinRange({
-                          months,
-                          selected,
-                        }) &&
-                        !isStart &&
-                        !isEnd,
                     })}
-                    style={style}
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log('ON CLICK', isDisabled);
                       if (!isDisabled) {
                         handleClick(months[0], e);
                       }
@@ -208,6 +152,11 @@ const Quarters = (props) => {
                         <li
                           key={index}
                           data-month={`${format(date, 'YYYY-MM')}`}
+                          className={classNames({
+                            [styles.selected]:
+                              isSameMonth(date, start) ||
+                              isSameMonth(date, end),
+                          })}
                         >
                           <div
                             className={styles.selection}
@@ -227,23 +176,12 @@ const Quarters = (props) => {
         </>
       );
     },
-    [
-      handleClick,
-      handlers,
-      locale,
-      max,
-      maxDate,
-      min,
-      minDate,
-      selected,
-      theme,
-      today,
-    ]
+    [handleClick, handlers, locale, max, maxDate, min, minDate, start, end]
   );
 
   const currentYear = today.getFullYear();
   const yearsSliced = years.slice(0, years.length);
-  const rowHeight = 210;
+  const rowHeight = 164;
   const heights = yearsSliced.map((val, index) =>
     index === 0 || index === yearsSliced.length - 1
       ? rowHeight + SPACING
@@ -288,10 +226,7 @@ const Quarters = (props) => {
             maxDate,
           });
 
-          const months = getMonthsForYear(
-            year,
-            getSelected(selected).start.getDate()
-          );
+          const months = getMonthsForYear(year, start.getDate());
 
           const appendages = months
             .slice(0, fiscalYearStart - 1)
@@ -302,7 +237,6 @@ const Quarters = (props) => {
             ...appendages,
           ];
           const chunked = chunk(fiscalYear, 4);
-
           return (
             <div
               key={index}

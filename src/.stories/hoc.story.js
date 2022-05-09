@@ -24,6 +24,7 @@ import {
   isBefore,
   subMonths,
   startOfMonth,
+  subQuarters,
 } from 'date-fns';
 
 const today = new Date();
@@ -92,7 +93,7 @@ storiesOf('Higher Order Components', module)
         showHeader: false,
         hideYearsOnSelect: false,
       }}
-      minDate={subMonths(new Date(), 10)}
+      minDate={subMonths(new Date(), 100)}
       maxDate={addMonths(new Date(), 10)}
       Component={withMonthRange(Calendar)}
     />
@@ -115,30 +116,13 @@ storiesOf('Higher Order Components', module)
       Component={withMonthRange(Calendar)}
     />
   ))
-  .add('Quarterly Selection', () => (
-    <InfiniteCalendar
-      isQuarterlySelection
-      selected={subMonths(new Date(), 3)}
-      fiscalYearStart={5}
-      display={'quarters'}
-      displayOptions={{
-        showHeader: false,
-        hideYearsOnSelect: false,
-      }}
-      onSelect={(e) => console.log('ON SELECT', e)}
-      min={subMonths(startOfMonth(new Date()), 20)}
-      minDate={subMonths(startOfMonth(new Date()), 11)}
-      max={addMonths(endOfMonth(new Date()), 22)}
-      maxDate={addMonths(endOfMonth(new Date()), 11)}
-    />
-  ))
   .add('Quarter Range Selection', () => (
     <InfiniteCalendar
       isQuarterlySelection
-      fiscalYearStart={5}
+      fiscalYearStart={4}
       selected={{
-        start: subMonths(new Date(), 1),
-        end: addMonths(new Date(), 4),
+        start: '2022-01-01',
+        end: '2022-03-31',
       }}
       display={'quarters'}
       displayOptions={{
@@ -146,10 +130,10 @@ storiesOf('Higher Order Components', module)
         hideYearsOnSelect: false,
       }}
       onSelect={(e) => console.log('ON SELECT', e)}
-      min={subMonths(startOfMonth(new Date()), 18)}
-      minDate={subMonths(startOfMonth(new Date()), 9)}
-      max={addMonths(endOfMonth(new Date()), 18)}
-      maxDate={addMonths(endOfMonth(new Date()), 9)}
+      min={new Date('2011-06-01')}
+      minDate={new Date('2011-06-01')}
+      max={new Date('2022-03-31')}
+      maxDate={new Date('2022-03-31')}
       Component={withQuarterRange(Calendar)}
     />
   ))

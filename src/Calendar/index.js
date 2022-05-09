@@ -448,7 +448,7 @@ export default class Calendar extends Component {
           {display === 'quarters' && (
             <QuartersComponent
               height={height}
-              hideOnSelect={false}
+              hideOnSelect={hideYearsOnSelect}
               locale={locale}
               max={this._max}
               maxDate={this._maxDate}
