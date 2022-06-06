@@ -143,6 +143,13 @@ $cellSize: 40px;
         }
       }
 
+      ol.disabled {
+        li.selected {
+          background: transparent;
+          color: $blue_25;
+        }
+      }
+
       &:hover,
       &.active {
         position: relative;
