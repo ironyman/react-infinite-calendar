@@ -133,6 +133,7 @@ const Quarters = (props) => {
               return (
                 <div key={`${getMonth(months[0])}`}>
                   <ol
+                    data-month={`${format(months[0], 'YYYY-MM')}`}
                     className={classNames(styles.month, {
                       [styles.selected]: isSelected && !isDisabled,
                       [styles.disabled]: isDisabled,

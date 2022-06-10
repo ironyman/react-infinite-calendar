@@ -104,9 +104,6 @@ function handleSelect(
 function handleMouseOver(e, { onSelect, selectionStart, fiscalYearStart }) {
   e.stopPropagation();
   const month = e.target.getAttribute('data-month');
-  if (!month) {
-    return;
-  }
   onSelect({
     eventType: EVENT_TYPE.HOVER,
     ...getMonthRangeDate({
