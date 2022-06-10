@@ -76,7 +76,6 @@ const Quarters = (props) => {
     years,
     fiscalYearStart = 1,
   } = props;
-
   const { start, end } = getSelected(selected);
   const selectedYearIndex = useMemo(() => {
     const yearsSliced = years.slice(0, years.length);
@@ -125,7 +124,6 @@ const Quarters = (props) => {
                   max,
                   maxDate,
                 });
-
                 return disabled;
               });
               const isSelected = months.some((month) =>

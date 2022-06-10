@@ -149,6 +149,7 @@ function getMonthRangeDate({
     compareEndDate.push(endOfQuarter(sortedDate.end, fiscalYearStart));
     maxSelected && compareEndDate.push(maxSelected);
   }
+
   return {
     start:
       compareStartDate.length > 0 ? max(...compareStartDate) : sortedDate.start,
