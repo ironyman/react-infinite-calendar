@@ -420,30 +420,32 @@ export default class Calendar extends Component {
                 todayLabel={locale.todayLabel.long}
               />
             )}
-            <MonthList
-              ref={this._MonthList}
-              DayComponent={DayComponent}
-              disabledDates={disabledDates}
-              disabledDays={disabledDays}
-              height={height}
-              isScrolling={isScrolling}
-              locale={locale}
-              maxDate={this._maxDate}
-              min={this._min}
-              minDate={this._minDate}
-              months={this.months}
-              onScroll={this.handleScroll}
-              overscanMonthCount={overscanMonthCount}
-              passThrough={passThrough}
-              theme={theme}
-              today={today}
-              rowHeight={rowHeight}
-              selected={validSelection}
-              scrollDate={scrollDate}
-              showOverlay={showOverlay}
-              width={width}
-              initialScrollDate={initialScrollDate}
-            />
+            {display !== 'quarters' && (
+              <MonthList
+                ref={this._MonthList}
+                DayComponent={DayComponent}
+                disabledDates={disabledDates}
+                disabledDays={disabledDays}
+                height={height}
+                isScrolling={isScrolling}
+                locale={locale}
+                maxDate={this._maxDate}
+                min={this._min}
+                minDate={this._minDate}
+                months={this.months}
+                onScroll={this.handleScroll}
+                overscanMonthCount={overscanMonthCount}
+                passThrough={passThrough}
+                theme={theme}
+                today={today}
+                rowHeight={rowHeight}
+                selected={validSelection}
+                scrollDate={scrollDate}
+                showOverlay={showOverlay}
+                width={width}
+                initialScrollDate={initialScrollDate}
+              />
+            )}
           </div>
           {display === 'quarters' && (
             <QuartersComponent

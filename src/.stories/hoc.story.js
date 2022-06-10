@@ -127,6 +127,7 @@ storiesOf('Higher Order Components', module)
       display={'quarters'}
       displayOptions={{
         showHeader: false,
+        showWeekdays: false,
         hideYearsOnSelect: false,
       }}
       onSelect={(e) => console.log('ON SELECT', e)}

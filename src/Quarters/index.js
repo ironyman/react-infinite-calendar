@@ -201,79 +201,74 @@ const Quarters = (props) => {
   }
 
   return (
-    <div
-      className={styles.root}
-      style={{ color: theme.selectionColor, height: height + 40 }}
-    >
-      <VirtualList
-        className={styles.list}
-        width={width}
-        height={containerHeight}
-        itemCount={yearsSliced.length}
-        estimatedItemSize={rowHeight}
-        itemSize={(index) => heights[index]}
-        scrollOffset={scrollOffset}
-        renderItem={({ index, style }) => {
-          const year = yearsSliced[index];
-          const isActive = index === selectedYearIndex;
-          const shouldAllowToSwitchYear = allowToSwitchYear({
-            selected,
-            year,
-            min,
-            minDate,
-            max,
-            maxDate,
-          });
+    <VirtualList
+      className={styles.list}
+      width={width}
+      height={containerHeight}
+      itemCount={yearsSliced.length}
+      estimatedItemSize={rowHeight}
+      itemSize={(index) => heights[index]}
+      scrollOffset={scrollOffset}
+      renderItem={({ index, style }) => {
+        const year = yearsSliced[index];
+        const isActive = index === selectedYearIndex;
+        const shouldAllowToSwitchYear = allowToSwitchYear({
+          selected,
+          year,
+          min,
+          minDate,
+          max,
+          maxDate,
+        });
 
-          const months = getMonthsForYear(year, start.getDate());
+        const months = getMonthsForYear(year, start.getDate());
 
-          const appendages = months
-            .slice(0, fiscalYearStart - 1)
-            .map((date) => addYears(date, 1));
+        const appendages = months
+          .slice(0, fiscalYearStart - 1)
+          .map((date) => addYears(date, 1));
 
-          const fiscalYear = [
-            ...months.slice(fiscalYearStart - 1, months.length),
-            ...appendages,
-          ];
-          const chunked = chunk(fiscalYear, 4);
-          return (
-            <div
-              key={index}
-              className={classNames(styles.year, {
-                [styles.active]: showQuarters && isActive,
-                [styles.withQuarters]: showQuarters,
-                [styles.first]: index === 0,
-                [styles.last]: index === yearsSliced.length - 1,
+        const fiscalYear = [
+          ...months.slice(fiscalYearStart - 1, months.length),
+          ...appendages,
+        ];
+        const chunked = chunk(fiscalYear, 4);
+        return (
+          <div
+            key={index}
+            className={classNames(styles.year, {
+              [styles.active]: showQuarters && isActive,
+              [styles.withQuarters]: showQuarters,
+              [styles.first]: index === 0,
+              [styles.last]: index === yearsSliced.length - 1,
+            })}
+            title={shouldAllowToSwitchYear ? `Set year to ${year}` : ''}
+            data-year={year}
+            style={{
+              ...style,
+              ...{
+                color:
+                  typeof theme.selectionColor === 'function'
+                    ? theme.selectionColor(new Date(year, 0, 1))
+                    : theme.selectionColor,
+              },
+            }}
+            onClick={(e) =>
+              shouldAllowToSwitchYear &&
+              handleClick(new Date(year, fiscalYearStart - 1, 1), e)
+            }
+          >
+            <label
+              className={classNames('year-label', {
+                [styles.currentYear]: currentYear === year,
               })}
-              title={shouldAllowToSwitchYear ? `Set year to ${year}` : ''}
-              data-year={year}
-              style={{
-                ...style,
-                ...{
-                  color:
-                    typeof theme.selectionColor === 'function'
-                      ? theme.selectionColor(new Date(year, 0, 1))
-                      : theme.selectionColor,
-                },
-              }}
-              onClick={(e) =>
-                shouldAllowToSwitchYear &&
-                handleClick(new Date(year, fiscalYearStart - 1, 1), e)
-              }
             >
-              <label
-                className={classNames('year-label', {
-                  [styles.currentYear]: currentYear === year,
-                })}
-              >
-                <span>{year}</span>
-              </label>
-              {showQuarters && renderMonths(chunked)}
-            </div>
-          );
-        }}
-      />
-    </div>
+              <span>{year}</span>
+            </label>
+            {showQuarters && renderMonths(chunked)}
+          </div>
+        );
+      }}
+    />
   );
 };
 
