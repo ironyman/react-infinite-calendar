@@ -133,7 +133,6 @@ const Quarters = (props) => {
               return (
                 <div key={`${getMonth(months[0])}`}>
                   <ol
-                    data-month={`${format(months[0], 'YYYY-MM')}`}
                     className={classNames(styles.month, {
                       [styles.selected]: isSelected && !isDisabled,
                       [styles.disabled]: isDisabled,
@@ -157,10 +156,7 @@ const Quarters = (props) => {
                               isSameMonth(date, end),
                           })}
                         >
-                          <div
-                            className={styles.selection}
-                            data-month={`${format(date, 'YYYY-MM')}`}
-                          >
+                          <div className={styles.selection}>
                             {format(date, 'MMM', { locale })}
                           </div>
                         </li>
@@ -241,8 +237,6 @@ const Quarters = (props) => {
               [styles.first]: index === 0,
               [styles.last]: index === yearsSliced.length - 1,
             })}
-            title={shouldAllowToSwitchYear ? `Set year to ${year}` : ''}
-            data-year={year}
             style={{
               ...style,
               ...{
@@ -270,6 +264,12 @@ const Quarters = (props) => {
       }}
     />
   );
+};
+
+export const defaultQuartersDisplayOptions = {
+  showHeader: false,
+  showWeekdays: false,
+  hideYearsOnSelect: false,
 };
 
 export default Quarters;

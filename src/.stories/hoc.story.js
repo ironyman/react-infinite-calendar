@@ -125,14 +125,9 @@ storiesOf('Higher Order Components', module)
         end: '2022-03-31',
       }}
       display={'quarters'}
-      displayOptions={{
-        showHeader: false,
-        showWeekdays: false,
-        hideYearsOnSelect: false,
-      }}
       onSelect={(e) => console.log('ON SELECT', e)}
-      min={'2011-07-01'}
-      minDate={'2011-07-01'}
+      min={'2001-07-01'}
+      minDate={'2001-07-01'}
       max={'2022-03-31'}
       maxDate={'2022-03-31'}
       Component={withQuarterRange(Calendar)}

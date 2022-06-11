@@ -26,25 +26,6 @@ export const withQuarterRange = compose(
     passThrough: {
       ...passThrough,
       Quarters: {
-        hoveredDate: hoveredDate,
-        onSelect: (date) => {
-          if (props.selectionStart) {
-            return handleSelect(endOfMonth(addMonths(date, 2)), {
-              selected,
-              ...props,
-            });
-          }
-
-          return handleSelect(date, { selected, ...props });
-        },
-        handlers: {
-          onMouseOver:
-            !isTouchDevice && props.selectionStart
-              ? (e) => handleMouseOver(e, { selected, ...props })
-              : null,
-        },
-      },
-      Years: {
         onSelect: (date) => handleSelect(date, { selected, ...props }),
         handlers: {
           onMouseOver:
@@ -82,6 +63,8 @@ function handleSelect(
         end: date,
         minSelected: minDate,
         maxSelected: maxDate,
+        minScrolled: min,
+        maxScrolled: max,
         fiscalYearStart,
       }),
     });
@@ -94,6 +77,8 @@ function handleSelect(
         end: date,
         minSelected: minDate,
         maxSelected: maxDate,
+        minScrolled: min,
+        maxScrolled: max,
         fiscalYearStart,
       }),
     });
@@ -104,6 +89,9 @@ function handleSelect(
 function handleMouseOver(e, { onSelect, selectionStart, fiscalYearStart }) {
   e.stopPropagation();
   const month = e.target.getAttribute('data-month');
+  if (!month) {
+    return;
+  }
   onSelect({
     eventType: EVENT_TYPE.HOVER,
     ...getMonthRangeDate({

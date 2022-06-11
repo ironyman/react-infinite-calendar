@@ -17,7 +17,7 @@ import CurrentMonth from '../CurrentMonth';
 import Header from '../Header';
 import MonthList from '../MonthList';
 import Weekdays from '../Weekdays';
-import Quarters from '../Quarters';
+import Quarters, { defaultQuartersDisplayOptions } from '../Quarters';
 import Years from '../Years';
 import Day from '../Day';
 import { parse, format, startOfDay } from 'date-fns';
@@ -195,7 +195,8 @@ export default class Calendar extends Component {
     return Object.assign(
       this._displayOptions,
       defaultDisplayOptions,
-      displayOptions
+      displayOptions,
+      this.props.display === 'quarters' ? defaultQuartersDisplayOptions : {}
     );
   }
   _locale = {};
@@ -450,7 +451,6 @@ export default class Calendar extends Component {
           {display === 'quarters' && (
             <QuartersComponent
               height={height}
-              hideOnSelect={hideYearsOnSelect}
               locale={locale}
               max={this._max}
               maxDate={this._maxDate}
@@ -459,7 +459,9 @@ export default class Calendar extends Component {
               scrollToDate={this.scrollToDate}
               selected={validSelection}
               setDisplay={this.setDisplay}
-              showMonths={showMonthsForYears}
+              showWeekdays={false}
+              showHeader={false}
+              hideYearsOnSelect={false}
               theme={theme}
               today={today}
               width={width}
