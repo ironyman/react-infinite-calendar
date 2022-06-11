@@ -459,9 +459,6 @@ export default class Calendar extends Component {
               scrollToDate={this.scrollToDate}
               selected={validSelection}
               setDisplay={this.setDisplay}
-              showWeekdays={false}
-              showHeader={false}
-              hideYearsOnSelect={false}
               theme={theme}
               today={today}
               width={width}
