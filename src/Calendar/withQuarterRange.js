@@ -86,8 +86,12 @@ function handleSelect(
   }
 }
 
-function handleMouseOver(e, { onSelect, selectionStart, fiscalYearStart }) {
+function handleMouseOver(
+  e,
+  { selected, onSelect, selectionStart, fiscalYearStart }
+) {
   e.stopPropagation();
+
   const month = e.target.getAttribute('data-month');
   if (!month) {
     return;
@@ -95,8 +99,8 @@ function handleMouseOver(e, { onSelect, selectionStart, fiscalYearStart }) {
   onSelect({
     eventType: EVENT_TYPE.HOVER,
     ...getMonthRangeDate({
-      start: min(selectionStart, month),
-      end: max(selectionStart, month),
+      start: selectionStart,
+      end: month,
       fiscalYearStart,
     }),
   });
@@ -121,6 +125,8 @@ function getMonthRangeDate({
   end,
   minSelected,
   maxSelected,
+  minScrolled,
+  maxScrolled,
   fiscalYearStart,
 }) {
   const sortedDate = getSortedSelection({ start, end });
@@ -128,13 +134,14 @@ function getMonthRangeDate({
   const compareEndDate = [];
   if (sortedDate.start) {
     compareStartDate.push(startOfQuarter(sortedDate.start, fiscalYearStart));
+    minScrolled && compareStartDate.push(minScrolled);
     minSelected && compareStartDate.push(minSelected);
   }
   if (sortedDate.end) {
     compareEndDate.push(endOfQuarter(sortedDate.end, fiscalYearStart));
     maxSelected && compareEndDate.push(maxSelected);
+    maxScrolled && compareEndDate.push(maxScrolled);
   }
-
   return {
     start:
       compareStartDate.length > 0 ? max(...compareStartDate) : sortedDate.start,
