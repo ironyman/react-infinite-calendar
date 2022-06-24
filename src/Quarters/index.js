@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
 import classNames from 'classnames';
 import { emptyFn, getMonthsForYear, isRange, chunk } from '../utils';
@@ -86,7 +86,7 @@ const Quarters = (props) => {
     (date, e) => {
       onSelect(date, e, (date) => scrollToDate(date));
       if (hideOnSelect) {
-        window.requestAnimationFrame(() => setDisplay('days'));
+        window.requestAnimationFrame(() => setDisplay('quarters'));
       }
     },
     [hideOnSelect, onSelect, scrollToDate, setDisplay]
@@ -187,14 +187,21 @@ const Quarters = (props) => {
     ? yearsSliced.length * rowHeight + 2 * SPACING
     : height + 40;
 
-  let scrollOffset = 0;
+  // Scroll to selected year
+  const [scrollOffset, setScrollOffset] = useState(0);
+  useEffect(() => {
+    if (!isYearLess && selectedYearIndex !== -1) {
+      const top = heights
+        .slice(0, selectedYearIndex)
+        .reduce((acc, val) => acc + val, 0);
+      setScrollOffset(top);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  if (!isYearLess && selectedYearIndex !== -1) {
-    const top = heights
-      .slice(0, selectedYearIndex)
-      .reduce((acc, val) => acc + val, 0);
-    scrollOffset = top - containerHeight / 2 + 40;
-  }
+  const onScroll = (scrollTop) => {
+    setScrollOffset(scrollTop);
+  };
 
   return (
     <VirtualList
@@ -205,6 +212,7 @@ const Quarters = (props) => {
       estimatedItemSize={rowHeight}
       itemSize={(index) => heights[index]}
       scrollOffset={scrollOffset}
+      onScroll={onScroll}
       renderItem={({ index, style }) => {
         const year = yearsSliced[index];
         const isActive = index === selectedYearIndex;
