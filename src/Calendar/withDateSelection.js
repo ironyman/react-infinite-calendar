@@ -15,14 +15,13 @@ export const enhanceDay = withPropsOnChange(
     }
     const start = format(startOfWeek(selected), 'YYYY-MM-DD');
     const end = format(endOfWeek(selected), 'YYYY-MM-DD');
-    let isSelected = date >= start && date <= end;
-    let isStart = date === start;
+
+    const isSelected = date >= start && date <= end;
+    const isStart = date === start;
     const isEnd = date === end;
     const isRange = !(isStart && isEnd);
-    const style =
-      isRange &&
-      ((isStart && { backgroundColor: theme.accentColor }) ||
-        (isEnd && { backgroundColor: theme.accentColor }));
+    const style = isRange &&
+      (isStart || isEnd) && { backgroundColor: theme.accentColor };
 
     return {
       className:

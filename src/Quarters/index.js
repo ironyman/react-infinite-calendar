@@ -27,20 +27,6 @@ const isDateDisabled = ({ date, min, minDate, max, maxDate }) => {
   );
 };
 
-const allowToSwitchYear = ({ selected, year, min, minDate, max, maxDate }) => {
-  if (isRange(selected)) {
-    return false;
-  }
-
-  return !isDateDisabled({
-    date: new Date(selected).setYear(year),
-    min,
-    minDate,
-    max,
-    maxDate,
-  });
-};
-
 const getSelected = (selected) => {
   if (isRange(selected)) {
     return {
@@ -216,14 +202,6 @@ const Quarters = (props) => {
       renderItem={({ index, style }) => {
         const year = yearsSliced[index];
         const isActive = index === selectedYearIndex;
-        const shouldAllowToSwitchYear = allowToSwitchYear({
-          selected,
-          year,
-          min,
-          minDate,
-          max,
-          maxDate,
-        });
 
         const months = getMonthsForYear(year, start.getDate());
 
@@ -254,10 +232,7 @@ const Quarters = (props) => {
                     : theme.selectionColor,
               },
             }}
-            onClick={(e) =>
-              shouldAllowToSwitchYear &&
-              handleClick(new Date(year, fiscalYearStart - 1, 1), e)
-            }
+            role="row"
           >
             <label
               className={classNames('year-label', {
