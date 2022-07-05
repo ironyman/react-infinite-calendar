@@ -211,16 +211,24 @@ export default class Calendar extends Component {
     return this.scrollTop;
   };
   getDateOffset = (date) => {
-    return this._MonthList && this._MonthList.current.getDateOffset(date);
+    return (
+      this._MonthList &&
+      this._MonthList.current &&
+      this._MonthList.current.getDateOffset(date)
+    );
   };
   scrollTo = (offset) => {
-    return this._MonthList && this._MonthList.current.scrollTo(offset);
+    return (
+      this._MonthList &&
+      this._MonthList.current &&
+      this._MonthList.current.scrollTo(offset)
+    );
   };
   scrollToDate = (date = new Date(), offset, shouldAnimate) => {
     const { display } = this.props;
-
     return (
       this._MonthList &&
+      this._MonthList.current &&
       this._MonthList.current.scrollToDate(
         date,
         offset,
@@ -276,6 +284,7 @@ export default class Calendar extends Component {
   }, 150);
   updateCurrentMonth = () => {
     this._MonthList &&
+      this._MonthList.current &&
       this.setState({
         currentMonth: this._MonthList.current.currentMonth,
       });
