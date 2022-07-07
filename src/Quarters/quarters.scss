@@ -12,22 +12,7 @@ $cellSize: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, rgba(15, 30, 70, 0.12) 0, #fff 3px);
   background-color: #fff;
-
-  > * {
-    box-sizing: border-box;
-  }
-}
-
-.list {
-  box-sizing: border-box;
-
-  &.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }
 
 .year {
@@ -51,19 +36,6 @@ $cellSize: 40px;
       box-sizing: border-box;
       height: 100%;
       line-height: $cellSize;
-    }
-  }
-
-  label:not(.label) {
-    flex-basis: 42%;
-
-    :hover > span {
-      color: $pink;
-    }
-
-    span {
-      flex-shrink: 0;
-      color: $blue;
     }
   }
 
@@ -140,6 +112,13 @@ $cellSize: 40px;
         // expand the hovering area
         li:nth-child(2) {
           flex: 1;
+        }
+      }
+
+      ol.disabled {
+        li.selected {
+          background: transparent;
+          color: $blue_25;
         }
       }
 

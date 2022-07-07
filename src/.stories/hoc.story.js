@@ -93,7 +93,7 @@ storiesOf('Higher Order Components', module)
         showHeader: false,
         hideYearsOnSelect: false,
       }}
-      minDate={subMonths(new Date(), 100)}
+      minDate={subMonths(new Date(), 500)}
       maxDate={addMonths(new Date(), 10)}
       Component={withMonthRange(Calendar)}
     />
@@ -125,15 +125,11 @@ storiesOf('Higher Order Components', module)
         end: '2022-03-31',
       }}
       display={'quarters'}
-      displayOptions={{
-        showHeader: false,
-        hideYearsOnSelect: false,
-      }}
       onSelect={(e) => console.log('ON SELECT', e)}
-      min={new Date('2011-06-01')}
-      minDate={new Date('2011-06-01')}
-      max={new Date('2022-03-31')}
-      maxDate={new Date('2022-03-31')}
+      min={'2001-07-01'}
+      minDate={'2001-07-01'}
+      max={'2022-03-31'}
+      maxDate={'2022-03-31'}
       Component={withQuarterRange(Calendar)}
     />
   ))

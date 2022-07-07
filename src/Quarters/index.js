@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import VirtualList from 'react-tiny-virtual-list';
 import classNames from 'classnames';
 import { emptyFn, getMonthsForYear, isRange, chunk } from '../utils';
@@ -25,20 +25,6 @@ const isDateDisabled = ({ date, min, minDate, max, maxDate }) => {
     isAfter(date, startOfMonth(max)) ||
     isAfter(date, startOfMonth(maxDate))
   );
-};
-
-const allowToSwitchYear = ({ selected, year, min, minDate, max, maxDate }) => {
-  if (isRange(selected)) {
-    return false;
-  }
-
-  return !isDateDisabled({
-    date: new Date(selected).setYear(year),
-    min,
-    minDate,
-    max,
-    maxDate,
-  });
 };
 
 const getSelected = (selected) => {
@@ -76,7 +62,6 @@ const Quarters = (props) => {
     years,
     fiscalYearStart = 1,
   } = props;
-
   const { start, end } = getSelected(selected);
   const selectedYearIndex = useMemo(() => {
     const yearsSliced = years.slice(0, years.length);
@@ -87,7 +72,7 @@ const Quarters = (props) => {
     (date, e) => {
       onSelect(date, e, (date) => scrollToDate(date));
       if (hideOnSelect) {
-        window.requestAnimationFrame(() => setDisplay('days'));
+        window.requestAnimationFrame(() => setDisplay('quarters'));
       }
     },
     [hideOnSelect, onSelect, scrollToDate, setDisplay]
@@ -125,7 +110,6 @@ const Quarters = (props) => {
                   max,
                   maxDate,
                 });
-
                 return disabled;
               });
               const isSelected = months.some((month) =>
@@ -158,10 +142,7 @@ const Quarters = (props) => {
                               isSameMonth(date, end),
                           })}
                         >
-                          <div
-                            className={styles.selection}
-                            data-month={`${format(date, 'YYYY-MM')}`}
-                          >
+                          <div className={styles.selection}>
                             {format(date, 'MMM', { locale })}
                           </div>
                         </li>
@@ -192,90 +173,86 @@ const Quarters = (props) => {
     ? yearsSliced.length * rowHeight + 2 * SPACING
     : height + 40;
 
-  let scrollOffset = 0;
+  // Scroll to selected year
+  const [scrollOffset, setScrollOffset] = useState(0);
+  useEffect(() => {
+    if (!isYearLess && selectedYearIndex !== -1) {
+      const top = heights
+        .slice(0, selectedYearIndex)
+        .reduce((acc, val) => acc + val, 0);
+      setScrollOffset(top);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  if (!isYearLess && selectedYearIndex !== -1) {
-    const top = heights
-      .slice(0, selectedYearIndex)
-      .reduce((acc, val) => acc + val, 0);
-    scrollOffset = top - containerHeight / 2 + 40;
-  }
+  const onScroll = (scrollTop) => {
+    setScrollOffset(scrollTop);
+  };
 
   return (
-    <div
-      className={styles.root}
-      style={{ color: theme.selectionColor, height: height + 40 }}
-    >
-      <VirtualList
-        className={styles.list}
-        width={width}
-        height={containerHeight}
-        itemCount={yearsSliced.length}
-        estimatedItemSize={rowHeight}
-        itemSize={(index) => heights[index]}
-        scrollOffset={scrollOffset}
-        renderItem={({ index, style }) => {
-          const year = yearsSliced[index];
-          const isActive = index === selectedYearIndex;
-          const shouldAllowToSwitchYear = allowToSwitchYear({
-            selected,
-            year,
-            min,
-            minDate,
-            max,
-            maxDate,
-          });
+    <VirtualList
+      className={styles.list}
+      width={width}
+      height={containerHeight}
+      itemCount={yearsSliced.length}
+      estimatedItemSize={rowHeight}
+      itemSize={(index) => heights[index]}
+      scrollOffset={scrollOffset}
+      onScroll={onScroll}
+      renderItem={({ index, style }) => {
+        const year = yearsSliced[index];
+        const isActive = index === selectedYearIndex;
 
-          const months = getMonthsForYear(year, start.getDate());
+        const months = getMonthsForYear(year, start.getDate());
 
-          const appendages = months
-            .slice(0, fiscalYearStart - 1)
-            .map((date) => addYears(date, 1));
+        const appendages = months
+          .slice(0, fiscalYearStart - 1)
+          .map((date) => addYears(date, 1));
 
-          const fiscalYear = [
-            ...months.slice(fiscalYearStart - 1, months.length),
-            ...appendages,
-          ];
-          const chunked = chunk(fiscalYear, 4);
-          return (
-            <div
-              key={index}
-              className={classNames(styles.year, {
-                [styles.active]: showQuarters && isActive,
-                [styles.withQuarters]: showQuarters,
-                [styles.first]: index === 0,
-                [styles.last]: index === yearsSliced.length - 1,
+        const fiscalYear = [
+          ...months.slice(fiscalYearStart - 1, months.length),
+          ...appendages,
+        ];
+        const chunked = chunk(fiscalYear, 4);
+        return (
+          <div
+            key={index}
+            className={classNames(styles.year, {
+              [styles.active]: showQuarters && isActive,
+              [styles.withQuarters]: showQuarters,
+              [styles.first]: index === 0,
+              [styles.last]: index === yearsSliced.length - 1,
+            })}
+            style={{
+              ...style,
+              ...{
+                color:
+                  typeof theme.selectionColor === 'function'
+                    ? theme.selectionColor(new Date(year, 0, 1))
+                    : theme.selectionColor,
+              },
+            }}
+            role="row"
+          >
+            <label
+              className={classNames('year-label', {
+                [styles.currentYear]: currentYear === year,
               })}
-              title={shouldAllowToSwitchYear ? `Set year to ${year}` : ''}
-              data-year={year}
-              style={{
-                ...style,
-                ...{
-                  color:
-                    typeof theme.selectionColor === 'function'
-                      ? theme.selectionColor(new Date(year, 0, 1))
-                      : theme.selectionColor,
-                },
-              }}
-              onClick={(e) =>
-                shouldAllowToSwitchYear &&
-                handleClick(new Date(year, fiscalYearStart - 1, 1), e)
-              }
             >
-              <label
-                className={classNames('year-label', {
-                  [styles.currentYear]: currentYear === year,
-                })}
-              >
-                <span>{year}</span>
-              </label>
-              {showQuarters && renderMonths(chunked)}
-            </div>
-          );
-        }}
-      />
-    </div>
+              <span>{year}</span>
+            </label>
+            {showQuarters && renderMonths(chunked)}
+          </div>
+        );
+      }}
+    />
   );
+};
+
+export const defaultQuartersDisplayOptions = {
+  showHeader: false,
+  showWeekdays: false,
+  hideYearsOnSelect: false,
 };
 
 export default Quarters;

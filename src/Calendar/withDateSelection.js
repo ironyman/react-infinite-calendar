@@ -2,88 +2,38 @@ import { compose, withProps, withPropsOnChange, withState } from 'recompose';
 import classNames from 'classnames';
 import { withDefaultProps } from './';
 import { sanitizeDate, withImmutableProps } from '../utils';
-import {
-  format,
-  parse,
-  startOfWeek,
-  endOfWeek,
-  startOfQuarter,
-  endOfQuarter,
-  setQuarter,
-} from 'date-fns';
+import { format, parse, startOfWeek, endOfWeek } from 'date-fns';
 import styles from '../Day/Day.scss';
 
 export const enhanceDay = withPropsOnChange(
   ['selected'],
-  ({
-    isWeeklySelection,
-    isQuarterlySelection,
-    selected,
-    fiscalYearStart,
-    date,
-    theme,
-  }) => {
-    if (isQuarterlySelection) {
-      const fiscalYear = new Date(
-        new Date().getFullYear(),
-        fiscalYearStart - 1,
-        1
-      );
-      setQuarter(fiscalYear, 1);
-      const start = format(startOfQuarter(selected), 'YYYY-MM-DD');
-      const end = format(endOfQuarter(selected), 'YYYY-MM-DD');
-
-      let isSelected = date >= start && date <= end;
-      let isStart = date === start;
-      let isEnd = date === end;
-      const isRange = !(isStart && isEnd);
-      const style =
-        isRange &&
-        ((isStart && { backgroundColor: theme.accentColor }) ||
-          (isEnd && { backgroundColor: theme.accentColor }));
-
+  ({ isWeeklySelection, selected, date, theme }) => {
+    if (!isWeeklySelection) {
       return {
-        className:
-          isSelected &&
-          isRange &&
-          classNames(styles.range, {
-            [styles.start]: isStart,
-            [styles.betweenRange]: !isStart && !isEnd,
-            [styles.end]: isEnd,
-          }),
-        isSelected,
-        selectionStyle: style,
+        isSelected: selected === date,
       };
     }
+    const start = format(startOfWeek(selected), 'YYYY-MM-DD');
+    const end = format(endOfWeek(selected), 'YYYY-MM-DD');
 
-    if (isWeeklySelection) {
-      const start = format(startOfWeek(selected), 'YYYY-MM-DD');
-      const end = format(endOfWeek(selected), 'YYYY-MM-DD');
-      let isSelected = date >= start && date <= end;
-      let isStart = date === start;
-      const isEnd = date === end;
-      const isRange = !(isStart && isEnd);
-      const style =
-        isRange &&
-        ((isStart && { backgroundColor: theme.accentColor }) ||
-          (isEnd && { backgroundColor: theme.accentColor }));
-
-      return {
-        className:
-          isSelected &&
-          isRange &&
-          classNames(styles.range, {
-            [styles.start]: isStart,
-            [styles.betweenRange]: !isStart && !isEnd,
-            [styles.end]: isEnd,
-          }),
-        isSelected,
-        selectionStyle: style,
-      };
-    }
+    const isSelected = date >= start && date <= end;
+    const isStart = date === start;
+    const isEnd = date === end;
+    const isRange = !(isStart && isEnd);
+    const style = isRange &&
+      (isStart || isEnd) && { backgroundColor: theme.accentColor };
 
     return {
-      isSelected: selected === date,
+      className:
+        isSelected &&
+        isRange &&
+        classNames(styles.range, {
+          [styles.start]: isStart,
+          [styles.betweenRange]: !isStart && !isEnd,
+          [styles.end]: isEnd,
+        }),
+      isSelected,
+      selectionStyle: style,
     };
   }
 );
@@ -95,9 +45,8 @@ const enhanceYear = withPropsOnChange(['selected'], ({ selected }) => ({
 // Enhancer to handle selecting and displaying a single date
 export const withDateSelection = compose(
   withDefaultProps,
-  withImmutableProps(({ DayComponent, QuartersComponent, YearsComponent }) => ({
+  withImmutableProps(({ DayComponent, YearsComponent }) => ({
     DayComponent: enhanceDay(DayComponent),
-    QuartersComponent: enhanceYear(QuartersComponent),
     YearsComponent: enhanceYear(YearsComponent),
   })),
   withState('hoveredDate', 'setHoveredDate'),
@@ -107,14 +56,7 @@ export const withDateSelection = compose(
     (props) => props.selected || new Date()
   ),
   withProps(
-    ({
-      onSelect,
-      setScrollDate,
-      hoveredDate,
-      setHoveredDate,
-      fiscalYearStart,
-      ...props
-    }) => {
+    ({ onSelect, setScrollDate, hoveredDate, setHoveredDate, ...props }) => {
       const selected = sanitizeDate(props.selected, props);
 
       return {
@@ -122,22 +64,9 @@ export const withDateSelection = compose(
           Day: {
             hoveredDate: hoveredDate,
             isWeeklySelection: Boolean(props.isWeeklySelection),
-            isQuarterlySelection: Boolean(props.isQuarterlySelection),
-            fiscalYearStart,
             onClick: onSelect,
             onMouseEnter: setHoveredDate,
             onMouseLeave: () => setHoveredDate(undefined),
-          },
-          Quarters: {
-            fiscalYearStart,
-            isQuarterlySelection: Boolean(props.isQuarterlySelection),
-            onSelect: (month) => {
-              return handleYearSelect(month, {
-                onSelect,
-                selected,
-                setScrollDate,
-              });
-            },
           },
           Years: {
             onSelect: (year) =>

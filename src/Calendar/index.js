@@ -17,7 +17,7 @@ import CurrentMonth from '../CurrentMonth';
 import Header from '../Header';
 import MonthList from '../MonthList';
 import Weekdays from '../Weekdays';
-import Quarters from '../Quarters';
+import Quarters, { defaultQuartersDisplayOptions } from '../Quarters';
 import Years from '../Years';
 import Day from '../Day';
 import { parse, format, startOfDay } from 'date-fns';
@@ -195,7 +195,8 @@ export default class Calendar extends Component {
     return Object.assign(
       this._displayOptions,
       defaultDisplayOptions,
-      displayOptions
+      displayOptions,
+      this.props.display === 'quarters' ? defaultQuartersDisplayOptions : {}
     );
   }
   _locale = {};
@@ -210,16 +211,24 @@ export default class Calendar extends Component {
     return this.scrollTop;
   };
   getDateOffset = (date) => {
-    return this._MonthList && this._MonthList.current.getDateOffset(date);
+    return (
+      this._MonthList &&
+      this._MonthList.current &&
+      this._MonthList.current.getDateOffset(date)
+    );
   };
   scrollTo = (offset) => {
-    return this._MonthList && this._MonthList.current.scrollTo(offset);
+    return (
+      this._MonthList &&
+      this._MonthList.current &&
+      this._MonthList.current.scrollTo(offset)
+    );
   };
   scrollToDate = (date = new Date(), offset, shouldAnimate) => {
     const { display } = this.props;
-
     return (
       this._MonthList &&
+      this._MonthList.current &&
       this._MonthList.current.scrollToDate(
         date,
         offset,
@@ -275,6 +284,7 @@ export default class Calendar extends Component {
   }, 150);
   updateCurrentMonth = () => {
     this._MonthList &&
+      this._MonthList.current &&
       this.setState({
         currentMonth: this._MonthList.current.currentMonth,
       });
@@ -420,35 +430,36 @@ export default class Calendar extends Component {
                 todayLabel={locale.todayLabel.long}
               />
             )}
-            <MonthList
-              ref={this._MonthList}
-              DayComponent={DayComponent}
-              disabledDates={disabledDates}
-              disabledDays={disabledDays}
-              height={height}
-              isScrolling={isScrolling}
-              locale={locale}
-              maxDate={this._maxDate}
-              min={this._min}
-              minDate={this._minDate}
-              months={this.months}
-              onScroll={this.handleScroll}
-              overscanMonthCount={overscanMonthCount}
-              passThrough={passThrough}
-              theme={theme}
-              today={today}
-              rowHeight={rowHeight}
-              selected={validSelection}
-              scrollDate={scrollDate}
-              showOverlay={showOverlay}
-              width={width}
-              initialScrollDate={initialScrollDate}
-            />
+            {display !== 'quarters' && (
+              <MonthList
+                ref={this._MonthList}
+                DayComponent={DayComponent}
+                disabledDates={disabledDates}
+                disabledDays={disabledDays}
+                height={height}
+                isScrolling={isScrolling}
+                locale={locale}
+                maxDate={this._maxDate}
+                min={this._min}
+                minDate={this._minDate}
+                months={this.months}
+                onScroll={this.handleScroll}
+                overscanMonthCount={overscanMonthCount}
+                passThrough={passThrough}
+                theme={theme}
+                today={today}
+                rowHeight={rowHeight}
+                selected={validSelection}
+                scrollDate={scrollDate}
+                showOverlay={showOverlay}
+                width={width}
+                initialScrollDate={initialScrollDate}
+              />
+            )}
           </div>
           {display === 'quarters' && (
             <QuartersComponent
               height={height}
-              hideOnSelect={hideYearsOnSelect}
               locale={locale}
               max={this._max}
               maxDate={this._maxDate}
@@ -457,7 +468,6 @@ export default class Calendar extends Component {
               scrollToDate={this.scrollToDate}
               selected={validSelection}
               setDisplay={this.setDisplay}
-              showMonths={showMonthsForYears}
               theme={theme}
               today={today}
               width={width}
