@@ -1,7 +1,7 @@
 export default {
   blank: 'Select a date...',
-  headerFormat: 'ddd, MMM Do',
-  monthLabelFormat: 'MMM YYYY',
+  headerFormat: 'EEE, MMM do',
+  monthLabelFormat: 'MMM yyyy',
   todayLabel: {
     long: 'Today',
   },

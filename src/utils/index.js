@@ -8,7 +8,7 @@ import {
   isBefore,
   isSameDay,
   startOfDay,
-} from 'date-fns';
+} from './dateFnV2';
 import { withPropsOnChange } from 'recompose';
 
 export const keyCodes = {
@@ -209,20 +209,20 @@ export function isRange(date) {
 export function getValidSelection(selected, minDate, maxDate) {
   if (!isRange(selected)) {
     if (minDate && isBefore(selected, minDate)) {
-      return format(minDate, 'YYYY-MM-DD');
+      return format(minDate, 'yyyy-MM-dd');
     }
     if (maxDate && isAfter(selected, maxDate)) {
-      return format(maxDate, 'YYYY-MM-DD');
+      return format(maxDate, 'yyyy-MM-dd');
     }
     return selected;
   }
 
   let { start, end } = selected;
   if (minDate && isBefore(start, minDate)) {
-    start = format(minDate, 'YYYY-MM-DD');
+    start = format(minDate, 'yyyy-MM-dd');
   }
   if (maxDate && isAfter(end, maxDate)) {
-    end = format(maxDate, 'YYYY-MM-DD');
+    end = format(maxDate, 'yyyy-MM-dd');
   }
   return { start, end };
 }

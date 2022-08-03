@@ -9,10 +9,10 @@ import {
   isBefore,
   isSameMonth,
   isWithinRange,
-  parse,
   startOfMonth,
-} from 'date-fns';
+} from '../utils/dateFnV2';
 import styles from './Years.scss';
+import { parseDate } from '../utils/parse';
 
 const SPACING = 0;
 
@@ -45,8 +45,8 @@ const getSelected = (selected) => {
   }
   // remove time
   return {
-    start: parse(format(selected, 'YYYY-MM-DD')),
-    end: parse(format(selected, 'YYYY-MM-DD')),
+    start: parseDate(format(selected, 'yyyy-MM-dd')),
+    end: parseDate(format(selected, 'yyyy-MM-dd')),
   };
 };
 
@@ -146,16 +146,16 @@ const Years = ({
                 title={
                   isRange(selected)
                     ? ''
-                    : `Set date to ${format(date, 'MMMM Do, YYYY')}`
+                    : `Set date to ${format(date, 'MMMM do, yyyy')}`
                 }
-                data-month={`${format(date, 'YYYY-MM')}`}
+                data-month={`${format(date, 'yyyy-MM')}`}
                 {...handlers}
               >
                 <div
                   className={styles.selection}
-                  data-month={`${format(date, 'YYYY-MM')}`}
+                  data-month={`${format(date, 'yyyy-MM')}`}
                 >
-                  {format(date, 'MMM', { locale })}
+                  {format(date, 'MMM', { locale: locale.locale })}
                 </div>
               </li>
             );

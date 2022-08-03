@@ -13,7 +13,7 @@ render(
       end: new Date(2017, 1, 18),
     }}
     locale={{
-      headerFormat: 'MMM Do',
+      headerFormat: 'MMM do',
     }}
   />,
   document.querySelector('#root')

@@ -10,11 +10,11 @@ import {
   isBefore,
   isWithinRange,
   isSameMonth,
-  parse,
   getMonth,
   addYears,
-} from 'date-fns';
+} from '../utils/dateFnV2';
 import styles from './quarters.scss';
+import { parseDate } from '../utils/parse';
 
 const SPACING = 0;
 
@@ -36,8 +36,8 @@ const getSelected = (selected) => {
   }
 
   return {
-    start: parse(format(selected, 'YYYY-MM-DD')),
-    end: parse(format(selected, 'YYYY-MM-DD')),
+    start: parseDate(format(selected, 'yyyy-MM-dd')),
+    end: parseDate(format(selected, 'yyyy-MM-dd')),
   };
 };
 
@@ -135,7 +135,7 @@ const Quarters = (props) => {
                       return (
                         <li
                           key={index}
-                          data-month={`${format(date, 'YYYY-MM')}`}
+                          data-month={`${format(date, 'yyyy-MM')}`}
                           className={classNames({
                             [styles.selected]:
                               isSameMonth(date, start) ||
@@ -143,7 +143,7 @@ const Quarters = (props) => {
                           })}
                         >
                           <div className={styles.selection}>
-                            {format(date, 'MMM', { locale })}
+                            {format(date, 'MMM', { locale: locale.locale })}
                           </div>
                         </li>
                       );

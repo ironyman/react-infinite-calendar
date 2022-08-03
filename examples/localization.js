@@ -2,11 +2,12 @@ import React from 'react';
 import { render } from 'react-dom';
 import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
+import fr from 'date-fns/locale/fr';
 
 const locale = {
   blank: 'Aucune date sélectionnée',
-  headerFormat: 'dddd, D MMM',
-  locale: require('date-fns/locale/fr'), // You need to pass in the date-fns locale for the language you want (unless it's EN)
+  headerFormat: 'EEEE, d MMM',
+  locale: fr, // You need to pass in the date-fns locale for the language you want (unless it's EN)
   todayLabel: {
     long: "Aujourd'hui",
     short: 'Auj.',

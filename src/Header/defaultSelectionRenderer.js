@@ -1,9 +1,10 @@
 import React from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import classNames from 'classnames';
-import { parse, format, startOfWeek, endOfWeek } from 'date-fns';
+import { format, startOfWeek, endOfWeek } from '../utils/dateFnV2';
 import styles from './Header.scss';
 import animation from './Animation.scss';
+import { parseDate } from '../utils/parse';
 
 export default function defaultSelectionRenderer(
   value,
@@ -19,7 +20,7 @@ export default function defaultSelectionRenderer(
     isWeeklySelection,
   }
 ) {
-  let date = parse(value);
+  let date = parseDate(value);
 
   if (isWeeklySelection) {
     if (key === 'start') {
@@ -51,9 +52,9 @@ export default function defaultSelectionRenderer(
       item: 'day',
       title:
         display === 'days'
-          ? `Scroll to ${format(date, dateFormat, { locale })}`
+          ? `Scroll to ${format(date, dateFormat, locale)}`
           : null,
-      value: format(date, dateFormat, { locale }),
+      value: format(date, dateFormat, locale),
     },
   ];
 
@@ -61,7 +62,7 @@ export default function defaultSelectionRenderer(
     <div
       key={key}
       className={styles.wrapper}
-      aria-label={format(date, dateFormat + ' YYYY', { locale })}
+      aria-label={format(date, dateFormat + ' yyyy', locale)}
     >
       <TransitionGroup>
         {values.map(({ handleClick, item, value, active, title }) => {

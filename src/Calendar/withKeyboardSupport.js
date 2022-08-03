@@ -1,5 +1,5 @@
 import { compose, withHandlers, withProps, withState } from 'recompose';
-import { addDays, format, isAfter, isBefore } from 'date-fns';
+import { addDays, format, isAfter, isBefore } from '../utils/dateFnV2';
 import { keyCodes, withImmutableProps } from '../utils';
 
 const enhanceDay = withProps((props) => ({
@@ -19,7 +19,7 @@ export const withKeyboardSupport = compose(
       ...passThrough,
       Day: {
         ...passThrough.Day,
-        highlightedDate: format(highlightedDate, 'YYYY-MM-DD'),
+        highlightedDate: format(highlightedDate, 'yyyy-MM-dd'),
         onClick: (date) => {
           setHighlight(null);
           passThrough.Day.onClick(date);

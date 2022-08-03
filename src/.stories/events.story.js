@@ -23,24 +23,24 @@ import {
   format,
   isBefore,
   subMonths,
-} from 'date-fns';
+} from '../utils/dateFnV2';
 
 const today = new Date();
 
 storiesOf('Events', module)
-.add('On Select', () => (
-  <InfiniteCalendar
-    onSelect={date =>
-      alert(`You selected: ${format(date, 'ddd, MMM Do YYYY')}`)
-    }
-  />
-))
-.add('On Scroll', () => [
-  <label key="label">Check your console logs.</label>,
-  <InfiniteCalendar
-    key="calendar"
-    onScroll={scrollTop =>
-      console.info('onScroll() – Scroll top:', scrollTop)
-    }
-  />,
-]);
+  .add('On Select', () => (
+    <InfiniteCalendar
+      onSelect={(date) =>
+        alert(`You selected: ${format(date, 'ddd, MMM do yyyy')}`)
+      }
+    />
+  ))
+  .add('On Scroll', () => [
+    <label key="label">Check your console logs.</label>,
+    <InfiniteCalendar
+      key="calendar"
+      onScroll={(scrollTop) =>
+        console.info('onScroll() – Scroll top:', scrollTop)
+      }
+    />,
+  ]);
