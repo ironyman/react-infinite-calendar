@@ -20,7 +20,8 @@ import Weekdays from '../Weekdays';
 import Quarters, { defaultQuartersDisplayOptions } from '../Quarters';
 import Years from '../Years';
 import Day from '../Day';
-import { parse, format, startOfDay } from 'date-fns';
+import { format, startOfDay } from '../utils/dateFnV2';
+import { parseDate } from '../utils/parse';
 import containerStyles from './Container.scss';
 
 export const withDefaultProps = defaultProps({
@@ -155,10 +156,10 @@ export default class Calendar extends Component {
   }
 
   updateYears(props = this.props) {
-    this._min = parse(props.min);
-    this._max = parse(props.max);
-    this._minDate = parse(props.minDate);
-    this._maxDate = parse(props.maxDate);
+    this._min = parseDate(props.min);
+    this._max = parseDate(props.max);
+    this._minDate = parseDate(props.minDate);
+    this._maxDate = parseDate(props.maxDate);
 
     const min = this._min.getFullYear();
     const minMonth = this._min.getMonth();
@@ -186,7 +187,7 @@ export default class Calendar extends Component {
   getDisabledDates(disabledDates) {
     return (
       disabledDates &&
-      disabledDates.map((date) => format(parse(date), 'YYYY-MM-DD'))
+      disabledDates.map((date) => format(parseDate(date), 'yyyy-MM-dd'))
     );
   }
   _displayOptions = {};

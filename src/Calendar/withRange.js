@@ -4,8 +4,9 @@ import classNames from 'classnames';
 import { withDefaultProps } from './';
 import { withImmutableProps } from '../utils';
 import enhanceHeader from '../Header/withRange';
-import { isBefore, format, parse, startOfWeek, endOfWeek } from 'date-fns';
+import { isBefore, format, startOfWeek, endOfWeek } from '../utils/dateFnV2';
 import styles from '../Day/Day.scss';
+import { parseDate } from '../utils/parse';
 
 let isTouchDevice = false;
 
@@ -21,8 +22,8 @@ export const enhanceDay = withPropsOnChange(
   ({ date, selected, theme, isWeeklySelection }) => {
     let { start, end } = selected;
     if (isWeeklySelection) {
-      start = format(startOfWeek(start), 'YYYY-MM-DD');
-      end = format(endOfWeek(end), 'YYYY-MM-DD');
+      start = format(startOfWeek(start), 'yyyy-MM-dd');
+      end = format(endOfWeek(end), 'yyyy-MM-dd');
     }
     let isSelected = date >= start && date <= end;
     let isStart = date === start;
@@ -102,8 +103,8 @@ export const withRange = (Calendar) => {
           },
         },
         selected: {
-          start: selected && format(selected.start, 'YYYY-MM-DD'),
-          end: selected && format(selected.end, 'YYYY-MM-DD'),
+          start: selected && format(selected.start, 'yyyy-MM-dd'),
+          end: selected && format(selected.end, 'yyyy-MM-dd'),
         },
         forwardedRef,
       })
@@ -157,7 +158,7 @@ function handleSelect(
 
 function handleMouseOver(e, { onSelect, selectionStart }) {
   const dateStr = e.target.getAttribute('data-date');
-  const date = dateStr && parse(dateStr);
+  const date = dateStr && parseDate(dateStr);
 
   if (!date) {
     return;
@@ -179,7 +180,7 @@ function handleYearSelect(
   setScrollDate(date);
   onSelect(
     getSortedSelection(
-      Object.assign({}, selected, { [displayKey]: parse(date) })
+      Object.assign({}, selected, { [displayKey]: parseDate(date) })
     )
   );
 }

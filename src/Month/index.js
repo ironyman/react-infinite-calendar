@@ -11,7 +11,7 @@ import {
   isSameWeek,
   isSameYear,
   startOfWeek,
-} from 'date-fns';
+} from '../utils/dateFnV2';
 import styles from './Month.scss';
 import dayStyles from '../Day/Day.scss';
 
@@ -50,7 +50,7 @@ const Month = ({
     const currentYear = today.getFullYear();
     const year = monthDate.getFullYear();
     const month = monthDate.getMonth();
-    const monthShort = format(monthDate, 'MMM', { locale: locale.locale });
+    const monthShort = format(monthDate, 'MMM', locale?.locale);
     const monthRows = [];
     let day = 0;
     let isDisabled = false;
@@ -59,28 +59,28 @@ const Month = ({
     const { isWeeklySelection } = passThrough.Day || {};
     let { start, end } = selected;
     if (isWeeklySelection) {
-      start = format(startOfWeek(start), 'YYYY-MM-DD');
-      end = format(endOfWeek(end), 'YYYY-MM-DD');
+      start = format(startOfWeek(start), 'yyyy-MM-dd');
+      end = format(endOfWeek(end), 'yyyy-MM-dd');
     }
     const edgeRows = {};
 
     let date, days, dow, row;
 
     // Used for faster comparisons
-    const _today = format(today, 'YYYY-MM-DD');
-    let _minDate = format(minDate, 'YYYY-MM-DD');
-    let _maxDate = format(maxDate, 'YYYY-MM-DD');
+    const _today = format(today, 'yyyy-MM-dd');
+    let _minDate = format(minDate, 'yyyy-MM-dd');
+    let _maxDate = format(maxDate, 'yyyy-MM-dd');
 
     // disable partial weeks for weekly selection
     if (isWeeklySelection) {
       const weekStartOfMin = startOfWeek(minDate);
       if (!isSameDay(minDate, weekStartOfMin)) {
-        _minDate = format(addWeeks(weekStartOfMin, 1), 'YYYY-MM-DD');
+        _minDate = format(addWeeks(weekStartOfMin, 1), 'yyyy-MM-dd');
       }
 
       const weekEndOfMax = endOfWeek(maxDate);
       if (!isSameDay(maxDate, weekEndOfMax)) {
-        _maxDate = format(addWeeks(weekEndOfMax, -1), 'YYYY-MM-DD');
+        _maxDate = format(addWeeks(weekEndOfMax, -1), 'yyyy-MM-dd');
       }
     }
 
@@ -158,7 +158,7 @@ const Month = ({
     today,
   ]);
 
-  const dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
+  const dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM yyyy';
   const month = getMonth(monthDate);
 
   return (
@@ -178,9 +178,7 @@ const Month = ({
             })}
             style={{ backgroundColor: theme.overlayColor }}
           >
-            <span>
-              {format(monthDate, dateFormat, { locale: locale.locale })}
-            </span>
+            <span>{format(monthDate, dateFormat, locale?.locale)}</span>
           </label>
         )}
       </div>

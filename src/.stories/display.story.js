@@ -23,7 +23,7 @@ import {
   format,
   isBefore,
   subMonths,
-} from 'date-fns';
+} from '../utils/dateFnV2';
 
 
 const today = new Date();

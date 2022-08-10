@@ -2,8 +2,9 @@ import { compose, withProps, withPropsOnChange, withState } from 'recompose';
 import classNames from 'classnames';
 import { withDefaultProps } from './';
 import { sanitizeDate, withImmutableProps } from '../utils';
-import { format, parse, startOfWeek, endOfWeek } from 'date-fns';
+import { format, startOfWeek, endOfWeek } from '../utils/dateFnV2';
 import styles from '../Day/Day.scss';
+import { parseDate } from '../utils/parse';
 
 export const enhanceDay = withPropsOnChange(
   ['selected'],
@@ -13,8 +14,8 @@ export const enhanceDay = withPropsOnChange(
         isSelected: selected === date,
       };
     }
-    const start = format(startOfWeek(selected), 'YYYY-MM-DD');
-    const end = format(endOfWeek(selected), 'YYYY-MM-DD');
+    const start = format(startOfWeek(selected), 'yyyy-MM-dd');
+    const end = format(endOfWeek(selected), 'yyyy-MM-dd');
 
     const isSelected = date >= start && date <= end;
     const isStart = date === start;
@@ -39,7 +40,7 @@ export const enhanceDay = withPropsOnChange(
 );
 
 const enhanceYear = withPropsOnChange(['selected'], ({ selected }) => ({
-  selected: parse(selected),
+  selected: parseDate(selected),
 }));
 
 // Enhancer to handle selecting and displaying a single date
@@ -73,14 +74,14 @@ export const withDateSelection = compose(
               handleYearSelect(year, { onSelect, selected, setScrollDate }),
           },
         },
-        selected: selected && format(selected, 'YYYY-MM-DD'),
+        selected: selected && format(selected, 'yyyy-MM-dd'),
       };
     }
   )
 );
 
 function handleYearSelect(date, { setScrollDate, onSelect }) {
-  const newDate = parse(date);
+  const newDate = parseDate(date);
 
   onSelect(newDate);
   setScrollDate(newDate);

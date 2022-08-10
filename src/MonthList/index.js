@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import VirtualList from 'react-tiny-virtual-list';
 import classNames from 'classnames';
 import { animate, emptyFn, getMonth, getWeek, getWeeksInMonth } from '../utils';
-import { addMonths, isSameMonth, parse, startOfMonth } from 'date-fns';
+import { addMonths, isSameMonth, startOfMonth } from '../utils/dateFnV2';
 import Month from '../Month';
 import styles from './MonthList.scss';
+import { parseDate } from '../utils/parse';
 
 const AVERAGE_ROWS_PER_MONTH = 5;
 
@@ -138,7 +139,7 @@ export default class MonthList extends Component {
       locale: { weekStartsOn },
       height,
     } = this.props;
-    const weeks = getWeek(startOfMonth(min), parse(date), weekStartsOn);
+    const weeks = getWeek(startOfMonth(min), parseDate(date), weekStartsOn);
 
     return weeks * rowHeight - (height - rowHeight / 2) / 2;
   }

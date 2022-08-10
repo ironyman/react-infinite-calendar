@@ -5,7 +5,7 @@ import {
   startOfMonth,
   endOfMonth,
   addMonths,
-} from 'date-fns';
+} from '../utils/dateFnV2';
 import { compose, withProps, withState } from 'recompose';
 import { withDefaultProps } from './';
 import { withImmutableProps } from '../utils';

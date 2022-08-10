@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import {
-  parse,
   startOfWeek,
   endOfWeek,
   isSameWeek,
@@ -9,8 +8,9 @@ import {
   startOfMonth,
   endOfMonth,
   getMonth,
-} from 'date-fns';
+} from '../utils/dateFnV2';
 import styles from './Day.scss';
+import { parseDate } from '../utils/parse';
 
 const padZero = (n) => (n < 10 ? `0${n}` : String(n));
 
@@ -20,9 +20,9 @@ export default class Day extends PureComponent {
 
     if (!isDisabled && typeof onClick === 'function') {
       if (isWeeklySelection) {
-        onClick(parse(startOfWeek(date)));
+        onClick(parseDate(startOfWeek(date)));
       } else {
-        onClick(parse(date));
+        onClick(parseDate(date));
       }
     }
   };

@@ -12,7 +12,7 @@ export default withImmutableProps(() => ({
       return defaultSelectionRenderer(values.start, props);
     }
 
-    const dateFormat = (props.locale && props.locale.headerFormat) || 'MMM Do';
+    const dateFormat = (props.locale && props.locale.headerFormat) || 'MMM do';
 
     return (
       <div className={styles.range} style={{ color: props.theme.headerColor }}>

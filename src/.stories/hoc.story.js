@@ -25,7 +25,7 @@ import {
   subMonths,
   startOfMonth,
   subQuarters,
-} from 'date-fns';
+} from '../utils/dateFnV2';
 
 const today = new Date();
 
@@ -37,7 +37,7 @@ storiesOf('Higher Order Components', module)
         end: addDays(new Date(), 17),
       }}
       locale={{
-        headerFormat: 'MMM Do',
+        headerFormat: 'MMM do',
       }}
       Component={withRange(withKeyboardSupport(Calendar))}
     />
@@ -47,7 +47,7 @@ storiesOf('Higher Order Components', module)
       isWeeklySelection
       selected={startOfWeek(new Date())}
       locale={{
-        headerFormat: 'MMM Do',
+        headerFormat: 'MMM do',
       }}
       Component={withDateSelection(Calendar)}
       min={subMonths(new Date(), 10)}
@@ -64,7 +64,7 @@ storiesOf('Higher Order Components', module)
         end: addWeeks(endOfWeek(new Date()), 2),
       }}
       locale={{
-        headerFormat: 'MMM Do',
+        headerFormat: 'MMM do',
       }}
       Component={withRange(Calendar)}
     />

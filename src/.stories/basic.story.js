@@ -12,7 +12,7 @@ import InfiniteCalendar, {
 import styles from './stories.scss';
 
 // Date manipulation utils
-import { addDays, addMonths, endOfMonth, subMonths } from 'date-fns';
+import { addDays, addMonths, endOfMonth, subMonths } from '../utils/dateFnV2';
 
 const today = new Date();
 
