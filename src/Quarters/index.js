@@ -143,7 +143,7 @@ const Quarters = (props) => {
                           })}
                         >
                           <div className={styles.selection}>
-                            {format(date, 'MMM', { locale: locale.locale })}
+                            {format(date, 'MMM', { locale: locale?.locale })}
                           </div>
                         </li>
                       );

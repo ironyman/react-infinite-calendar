@@ -155,7 +155,7 @@ const Years = ({
                   className={styles.selection}
                   data-month={`${format(date, 'yyyy-MM')}`}
                 >
-                  {format(date, 'MMM', { locale: locale.locale })}
+                  {format(date, 'MMM', { locale: locale?.locale })}
                 </div>
               </li>
             );
