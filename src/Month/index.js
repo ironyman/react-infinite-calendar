@@ -50,7 +50,7 @@ const Month = ({
     const currentYear = today.getFullYear();
     const year = monthDate.getFullYear();
     const month = monthDate.getMonth();
-    const monthShort = format(monthDate, 'MMM', locale?.locale);
+    const monthShort = format(monthDate, 'MMM', { locale: locale?.locale });
     const monthRows = [];
     let day = 0;
     let isDisabled = false;
@@ -178,7 +178,9 @@ const Month = ({
             })}
             style={{ backgroundColor: theme.overlayColor }}
           >
-            <span>{format(monthDate, dateFormat, locale?.locale)}</span>
+            <span>
+              {format(monthDate, dateFormat, { locale: locale?.locale })}
+            </span>
           </label>
         )}
       </div>

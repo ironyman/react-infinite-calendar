@@ -11,6 +11,7 @@ import InfiniteCalendar, {
   withMonthRange,
 } from '..';
 import styles from './stories.scss';
+import fr from 'date-fns/locale/fr';
 
 // Date manipulation utils
 import {
@@ -33,7 +34,7 @@ storiesOf('Internationalization', module)
       locale={{
         blank: 'Aucune date sélectionnée',
         headerFormat: 'EEEE, d MMM',
-        locale: require('date-fns/locale/fr'),
+        locale: fr,
         todayLabel: {
           long: "Aujourd'hui",
           short: 'Auj.',
