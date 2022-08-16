@@ -110,7 +110,7 @@ export const isWithinRange = (date, dateStart, dateEnd) => {
   if (!dateStart || !dateEnd) {
     return false;
   }
-  dateFn.isWithinInterval(parseDate(date), {
+  return dateFn.isWithinInterval(parseDate(date), {
     start: parseDate(dateStart),
     end: parseDate(dateEnd),
   });
