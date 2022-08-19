@@ -110,10 +110,14 @@ export const isWithinRange = (date, dateStart, dateEnd) => {
   if (!dateStart || !dateEnd) {
     return false;
   }
-  return dateFn.isWithinInterval(parseDate(date), {
-    start: parseDate(dateStart),
-    end: parseDate(dateEnd),
-  });
+  try {
+    return dateFn.isWithinInterval(parseDate(date), {
+      start: parseDate(dateStart),
+      end: parseDate(dateEnd),
+    });
+  } catch (error) {
+    return false;
+  }
 };
 
 export const areRangesOverlapping = (
