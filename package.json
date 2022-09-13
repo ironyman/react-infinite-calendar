@@ -1,6 +1,6 @@
 {
   "name": "@appannie/react-infinite-calendar",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "description": "Infinite scrolling date-picker built with React, with localization, themes, keyboard support, and more.",
   "main": "lib",
   "module": "es",
@@ -38,8 +38,8 @@
     "styled-components": "^5.3.3"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.2",
-    "react-dom": "^16.8.0 || ^17.0.2"
+    "react": "^16 || ^17 || ^18"
+    "react-dom": "^16 || ^17 || ^18"
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",
