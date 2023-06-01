@@ -135,7 +135,7 @@ const Quarters = (props) => {
                       return (
                         <li
                           key={index}
-                          data-month={`${format(date, 'yyyy-MM')}`}
+                          data-month={`${format(date, 'yyyy-MM-dd')}`}
                           className={classNames({
                             [styles.selected]:
                               isSameMonth(date, start) ||
