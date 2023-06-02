@@ -148,12 +148,12 @@ const Years = ({
                     ? ''
                     : `Set date to ${format(date, 'MMMM do, yyyy')}`
                 }
-                data-month={`${format(date, 'yyyy-MM')}`}
+                data-month={`${format(date, 'yyyy-MM-dd')}`}
                 {...handlers}
               >
                 <div
                   className={styles.selection}
-                  data-month={`${format(date, 'yyyy-MM')}`}
+                  data-month={`${format(date, 'yyyy-MM-dd')}`}
                 >
                   {format(date, 'MMM', { locale: locale?.locale })}
                 </div>
