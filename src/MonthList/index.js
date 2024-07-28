@@ -164,8 +164,10 @@ export default class MonthList extends Component {
       animate({
         fromValue: this.scrollEl.scrollTop,
         toValue: scrollTop,
-        onUpdate: (scrollTop, callback) =>
-          this.setState({ scrollTop }, callback),
+        onUpdate: (scrollTop, callback) => {
+          this.scrollEl.scrollTop = scrollTop;
+          callback();
+        },
         onComplete,
       });
     } else {

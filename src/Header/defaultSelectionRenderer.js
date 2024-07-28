@@ -78,7 +78,7 @@ export default function defaultSelectionRenderer(
                 classNames={animation}
                 timeout={{ exit: 250, enter: 250 }}
                 enter={shouldAnimate}
-                leave={shouldAnimate}
+                leave={shouldAnimate.toString()}
               >
                 <span
                   key={`${item}-${value}`}
