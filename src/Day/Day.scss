@@ -211,8 +211,8 @@
 
   &.start {
     .selection {
-      border-top-left-radius: $rowHeight / 2;
-      border-bottom-left-radius: $rowHeight / 2;
+      border-top-left-radius: calc($rowHeight / 2);
+      border-bottom-left-radius: calc($rowHeight / 2);
     }
 
     &:after {
@@ -230,8 +230,8 @@
     }
 
     .selection {
-      border-top-right-radius: $rowHeight / 2;
-      border-bottom-right-radius: $rowHeight / 2;
+      border-top-right-radius: calc($rowHeight / 2);
+      border-bottom-right-radius: calc($rowHeight / 2);
 
       box-sizing: border-box;
 
@@ -278,8 +278,8 @@
 
     &.startOfWeek {
       .selection {
-        border-top-left-radius: $rowHeight / 2;
-        border-bottom-left-radius: $rowHeight / 2;
+        border-top-left-radius: calc($rowHeight / 2);
+        border-bottom-left-radius: calc($rowHeight / 2);
       }
 
       &:after {
@@ -289,8 +289,8 @@
 
     &.endOfWeek {
       .selection {
-        border-top-right-radius: $rowHeight / 2;
-        border-bottom-right-radius: $rowHeight / 2;
+        border-top-right-radius: calc($rowHeight / 2);
+        border-bottom-right-radius: calc($rowHeight / 2);
       }
 
       &:after {
