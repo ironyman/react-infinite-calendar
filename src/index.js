@@ -13,13 +13,25 @@ export { withRange } from './Calendar/withRange';
 export { EVENT_TYPE } from './Calendar/Range';
 export { withMonthRange } from './Calendar/withMonthRange';
 export { withQuarterRange } from './Calendar/withQuarterRange';
+
+// https://github.com/acdlite/recompose/issues/640
+// const withForwardingRef = <Props extends {[_: string]: any}>(BaseComponent: React.ReactType<Props>) =>
+//   React.forwardRef((props, ref) => <BaseComponent {...props} forwardedRef={ref} />);
+
+const withForwardingRef = (BaseComponent) =>
+  React.forwardRef((props, ref) => <BaseComponent {...props} forwardedRef={ref} />);
+
+
 /*
  * By default, Calendar is a controlled component.
  * Export a sensible default for minimal setup
  */
 export default class DefaultCalendar extends Component {
   static defaultProps = {
-    Component: withDateSelection(Calendar),
+    // Component:  React.forwardRef(function (props, ref) { return withDateSelection(Calendar)({...props, ref}) }),
+    // Component: withDateSelection(Calendar),
+    Component: withForwardingRef(withDateSelection(Calendar)),
+
     interpolateSelection: (selected) => selected,
   };
   state = {
