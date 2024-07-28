@@ -11896,7 +11896,7 @@ react-textarea-autosize@^8.3.0:
 
 "react-tiny-virtual-list@https://github.com/ironyman/react-tiny-virtual-list#master":
   version "2.2.0"
-  resolved "https://github.com/ironyman/react-tiny-virtual-list#51cce2db317f70ca040a4bb4cb18cf2c3e2d2bf1"
+  resolved "https://github.com/ironyman/react-tiny-virtual-list#53fce79f4c03b4c06cf4d200683bd95449e95bf3"
   dependencies:
     prop-types "^15.5.7"
 
