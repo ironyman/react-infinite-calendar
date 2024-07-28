@@ -64,21 +64,25 @@ export default function defaultSelectionRenderer(
       className={styles.wrapper}
       aria-label={format(date, dateFormat + ' yyyy', locale)}
     >
-      <TransitionGroup>
+      <TransitionGroup component={null}>
         {values.map(({ handleClick, item, value, active, title }) => {
+          // Div wrapping CSSTransition causes
+          // Warning: Received `true` for a non-boolean attribute `in`.
+          // See https://github.com/reactjs/react-transition-group/issues/561
+          // Not sure why.
           return (
-            <div
+            <CSSTransition
               key={item}
-              className={classNames(styles.dateWrapper, styles[item], {
-                [styles.active]: active,
-              })}
-              title={title}
+              classNames={animation}
+              timeout={{ exit: 250, enter: 250 }}
+              enter={shouldAnimate}
+              leave={shouldAnimate.toString()}
             >
-              <CSSTransition
-                classNames={animation}
-                timeout={{ exit: 250, enter: 250 }}
-                enter={shouldAnimate}
-                leave={shouldAnimate.toString()}
+              <div
+                className={classNames(styles.dateWrapper, styles[item], {
+                  [styles.active]: active,
+                })}
+                title={title}
               >
                 <span
                   key={`${item}-${value}`}
@@ -88,8 +92,8 @@ export default function defaultSelectionRenderer(
                 >
                   {value}
                 </span>
-              </CSSTransition>
-            </div>
+              </div>
+            </CSSTransition>
           );
         })}
       </TransitionGroup>

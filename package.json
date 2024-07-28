@@ -32,7 +32,6 @@
     "date-fns": "^2.29.1",
     "dom-helpers": "^5.2.0",
     "prop-types": "^15.7.2",
-    "react-tiny-virtual-list": "../react-tiny-virtual-list",
     "react-transition-group": "^4.4.1",
     "recompose": "^0.30.0",
     "styled-components": "^5.3.3"
@@ -88,6 +87,7 @@
     "sass-loader": "^11.0.1",
     "source-map-support": "^0.5.21",
     "style-loader": "^2.0.0",
+    "react-tiny-virtual-list": "../react-tiny-virtual-list",
     "webpack": "^5.35.0"
   },
   "repository": "appannie/react-infinite-calendar",
