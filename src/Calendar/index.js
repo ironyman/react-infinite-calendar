@@ -138,7 +138,7 @@ export default class Calendar extends Component {
     }
   }
 
-  UNSAFE_componentWillUpdate(nextProps) {
+  componentDidUpdate(nextProps) {
     let { min, minDate, max, maxDate } = this.props;
 
     if (

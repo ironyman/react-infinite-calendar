@@ -113,15 +113,13 @@ export default class MonthList extends Component {
     this.scrollEl = this.VirtualList.rootNode;
   }
 
-  UNSAFE_componentWillReceiveProps({ scrollDate }) {
-    if (scrollDate !== this.props.scrollDate) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.scrollDate !== this.props.scrollDate) {
       this.setState({
-        scrollTop: this.getDateOffset(scrollDate),
+        scrollTop: this.getDateOffset(prevProps.scrollDate),
       });
     }
-  }
 
-  componentDidUpdate(prevProps) {
     if (
       this.props.initialScrollDate != null &&
       this.props.initialScrollDate !== prevProps.initialScrollDate

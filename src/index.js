@@ -32,7 +32,7 @@ export default class DefaultCalendar extends Component {
   _getRef = (ref) => {
     this.calendar = ref;
   };
-  UNSAFE_componentWillReceiveProps({ selected }) {
+  componentDidUpdate({ selected }) {
     if (selected !== this.props.selected) {
       this.setState({ selected });
     }
