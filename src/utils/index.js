@@ -214,7 +214,9 @@ export function getValidSelection(selected, minDate, maxDate) {
     if (maxDate && isAfter(selected, maxDate)) {
       return format(maxDate, 'yyyy-MM-dd');
     }
-    return selected;
+    // Needs to return date, but selected is string for some reason
+    // return for react-infinite-calendar/src/Calendar/index.js
+    return new Date(selected);
   }
 
   let { start, end } = selected;
