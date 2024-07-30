@@ -42,6 +42,7 @@ export const withDefaultProps = defaultProps({
   onScroll: emptyFn,
   onScrollEnd: emptyFn,
   onSelect: emptyFn,
+  onRendered: emptyFn,
   passThrough: {},
   rowHeight: 40,
   tabIndex: 1,
@@ -100,6 +101,7 @@ export default class Calendar extends Component {
     minDate: PropTypes.instanceOf(Date),
     onScroll: PropTypes.func,
     onScrollEnd: PropTypes.func,
+    onRendered: PropTypes.func,
     onSelect: PropTypes.func,
     rowHeight: PropTypes.number,
     tabIndex: PropTypes.number,
@@ -283,6 +285,11 @@ export default class Calendar extends Component {
 
     onScrollEnd(this.scrollTop);
   }, 150);
+  handleRendered = (startIndex) => {
+    const { onRendered } = this.props;
+    // startIndex is months from Jan 1980.
+    onRendered(startIndex);
+  };
   updateCurrentMonth = () => {
     this._MonthList &&
       this._MonthList.current &&
@@ -445,6 +452,7 @@ export default class Calendar extends Component {
                 minDate={this._minDate}
                 months={this.months}
                 onScroll={this.handleScroll}
+                onRendered={this.handleRendered}
                 overscanMonthCount={overscanMonthCount}
                 passThrough={passThrough}
                 theme={theme}

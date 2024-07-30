@@ -23,6 +23,7 @@ export default class MonthList extends Component {
     months: PropTypes.arrayOf(PropTypes.object),
     onDaySelect: PropTypes.func,
     onScroll: PropTypes.func,
+    onRendered: PropTypes.func,
     overscanMonthCount: PropTypes.number,
     rowHeight: PropTypes.number,
     selected: PropTypes.oneOfType([
@@ -102,6 +103,8 @@ export default class MonthList extends Component {
     }
 
     this.currentMonth = addMonths(startMonth, topOverscanCount);
+
+    this.props.onRendered(startIndex);
   };
 
   onScroll = (scrollTop, event) => {

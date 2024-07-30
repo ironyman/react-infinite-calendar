@@ -42,5 +42,8 @@ storiesOf('Events', module)
       onScroll={(scrollTop) =>
         console.info('onScroll() – Scroll top:', scrollTop)
       }
+      onRendered={(idx) => {
+        console.log("rendered", idx);
+      }}
     />,
   ]);
