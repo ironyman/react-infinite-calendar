@@ -83,6 +83,6 @@ export const withDateSelection = compose(
 function handleYearSelect(date, { setScrollDate, onSelect }) {
   const newDate = parseDate(date);
 
-  onSelect(newDate);
+  onSelect(newDate, 'month');
   setScrollDate(newDate);
 }

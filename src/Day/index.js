@@ -20,9 +20,9 @@ export default class Day extends PureComponent {
 
     if (!isDisabled && typeof onClick === 'function') {
       if (isWeeklySelection) {
-        onClick(parseDate(startOfWeek(date)));
+        onClick(parseDate(startOfWeek(date)), 'week');
       } else {
-        onClick(parseDate(date));
+        onClick(parseDate(date), 'day');
       }
     }
   };

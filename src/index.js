@@ -49,11 +49,11 @@ export default class DefaultCalendar extends Component {
       this.setState({ selected });
     }
   }
-  handleSelect = (selected) => {
+  handleSelect = (selected, reason) => {
     const { onSelect, interpolateSelection } = this.props;
 
     if (typeof onSelect === 'function') {
-      onSelect(selected);
+      onSelect(selected, reason);
     }
 
     this.setState({
