@@ -91,6 +91,7 @@
     position: relative;
     z-index: 2;
 
+
     > span {
       color: $blue;
     }
@@ -100,9 +101,11 @@
     }
 
     &:before {
-      @include circle($rowHeight);
-      box-shadow: inset 0 0 0 1px;
-      z-index: -1;
+      // @include circle($rowHeight);
+      // box-shadow: inset 0 0 0 1px;
+      // z-index: -1;
+      font-weight: 1000;
+      text-decoration: underline;
     }
 
     &.disabled:before {
