@@ -100,7 +100,11 @@ export const isLastDayOfMonth = (date) =>
 // --- fns fns needs convert params in another format
 export const format = (date, formatStr, options) => {
   try {
-    return dateFn.format(parseDate(date), formatStr, options);
+    date = parseDate(date);
+    let dateLocal = new Date(
+      date.valueOf() + date.getTimezoneOffset() * 60 * 1000
+    );
+    return dateFn.format(dateLocal, formatStr, options);
   } catch (error) {
     return 'Invalid Date';
   }
