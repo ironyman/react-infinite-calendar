@@ -54,7 +54,7 @@ export default function defaultSelectionRenderer(
         display === 'days'
           ? `Scroll to ${format(date, dateFormat, locale)}`
           : null,
-      value: format(date, dateFormat, locale),
+      value: format(date, dateFormat, locale, true),
     },
   ];
 

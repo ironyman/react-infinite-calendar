@@ -90,7 +90,8 @@
   &.today {
     position: relative;
     z-index: 2;
-
+    font-weight: 1000;
+    text-decoration: underline;
 
     > span {
       color: $blue;

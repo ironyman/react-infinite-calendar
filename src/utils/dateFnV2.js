@@ -98,13 +98,22 @@ export const isLastDayOfMonth = (date) =>
   dateFn.isLastDayOfMonth(parseDate(date));
 
 // --- fns fns needs convert params in another format
-export const format = (date, formatStr, options) => {
+// Don't always want to format to localtime, otherwise it produces wrong result.
+export const format = (date, formatStr, options, localTime) => {
   try {
     date = parseDate(date);
+    let res;
     let dateLocal = new Date(
       date.valueOf() + date.getTimezoneOffset() * 60 * 1000
     );
-    return dateFn.format(dateLocal, formatStr, options);
+
+    if (localTime) {
+      res = dateFn.format(dateLocal, formatStr, options);
+    } else {
+      res = dateFn.format(date, formatStr, options);
+    }
+    console.log(date, dateLocal, res);
+    return res;
   } catch (error) {
     return 'Invalid Date';
   }
