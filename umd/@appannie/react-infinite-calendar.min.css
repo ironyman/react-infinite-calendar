@@ -303,6 +303,8 @@
 .Day_root__t6e32.Day_today__2_9PP {
   position: relative;
   z-index: 2;
+  font-weight: 1000;
+  text-decoration: underline;
 }
 .Day_root__t6e32.Day_today__2_9PP > span {
   color: #0f2346;

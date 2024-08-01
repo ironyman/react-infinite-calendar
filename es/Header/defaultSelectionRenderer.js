@@ -47,7 +47,7 @@ function defaultSelectionRenderer(value, _ref) {
     },
     item: 'day',
     title: display === 'days' ? "Scroll to ".concat(format(date, dateFormat, locale)) : null,
-    value: format(date, dateFormat, locale)
+    value: format(date, dateFormat, locale, true)
   }];
   return /*#__PURE__*/React.createElement("div", {
     key: key,
