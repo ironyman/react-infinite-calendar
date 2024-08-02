@@ -68,9 +68,9 @@ var format = function format(date, formatStr, options, localTime) {
       res = dateFn.format(dateLocal, formatStr, options);
     } else {
       res = dateFn.format(date, formatStr, options);
-    }
+    } // console.log(date, dateLocal, res);
 
-    console.log(date, dateLocal, res);
+
     return res;
   } catch (error) {
     return 'Invalid Date';
