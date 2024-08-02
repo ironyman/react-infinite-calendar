@@ -112,7 +112,7 @@ export const format = (date, formatStr, options, localTime) => {
     } else {
       res = dateFn.format(date, formatStr, options);
     }
-    console.log(date, dateLocal, res);
+    // console.log(date, dateLocal, res);
     return res;
   } catch (error) {
     return 'Invalid Date';
