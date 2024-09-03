@@ -3,6 +3,5 @@
 /node_modules
 /.out
 .idea/
-styles.css
 npm-debug.log*
 .DS_Store
